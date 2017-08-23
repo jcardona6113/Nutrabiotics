@@ -144,7 +144,6 @@
 
 
                         mainViewModel.SearchInvoices = new SearchInvoicesViewModel();
-
                         mainViewModel.SearchCashHeader = new SearchCashHeaderViewModel(cashheaders);
 
                         break;

@@ -218,11 +218,11 @@
 											Command="{Binding EditShipToCommand}" 
 											Text="Editar">
                                     </MenuItem>
-                                    <MenuItem 
+                                    <!--MenuItem 
 											Command="{Binding DeleteShipToCommand}" 
 											IsDestructive="true"     
 											Text="Eliminar">
-                                    </MenuItem>
+                                    </-->
                                 </ViewCell.ContextActions>
                                 <Grid>
                                     <Grid.ColumnDefinitions>

@@ -12,10 +12,10 @@
 				Command="{Binding EditShipToCommand}"
 				Icon="ic_save.png">
         </ToolbarItem>
-        <ToolbarItem 
+        <!--ToolbarItem 
 				Command="{Binding DeleteShipToCommand}"
 				Icon="ic_delete_forever.png">
-        </ToolbarItem>
+        </-->
     </TabbedPage.ToolbarItems>
 
     <ContentPage.Padding>

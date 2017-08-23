@@ -96,33 +96,33 @@
             }
         }
 
-        public string Filter
-        {
-            set
-            {
-                if (_filter != value)
-                {
-                    _filter = value;
-                    if (string.IsNullOrEmpty(_filter))
-                    {
-                        ReloadCashHeaders();
-                    }
-                    else
-                    {
-                        Search();
-                    }
+        //public string Filter
+        //{
+        //    set
+        //    {
+        //        if (_filter != value)
+        //        {
+        //            _filter = value;
+        //            if (string.IsNullOrEmpty(_filter))
+        //            {
+        //                ReloadCashHeaders();
+        //            }
+        //            else
+        //            {
+        //                Search();
+        //            }
 
-                    PropertyChanged?.Invoke(
-                        this,
-                        new PropertyChangedEventArgs(nameof(Filter)));
-                }
-            }
-            get
-            {
-                return _filter;
-            }
+        //            PropertyChanged?.Invoke(
+        //                this,
+        //                new PropertyChangedEventArgs(nameof(Filter)));
+        //        }
+        //    }
+        //    get
+        //    {
+        //        return _filter;
+        //    }
 
-        }
+        //}
 
 
         #endregion
@@ -146,7 +146,9 @@
             dataService = new DataService();
             dialogService = new DialogService();
             navigationService = new NavigationService();
-           // CargarPagos();
+
+            CashHeaders = new ObservableCollection<CashHeader>();
+            // CargarPagos();
         } 
        
         #endregion
@@ -209,20 +211,20 @@
         }
 
 
-        public ICommand SearchCommand
-        {
-             get { return new RelayCommand(Search); }
-        }
+        //public ICommand SearchCommand
+        //{
+        //     get { return new RelayCommand(Search); }
+        //}
 
-        void Search()
-        {
-            CashHeaders = new ObservableCollection<Grouping<string, CashHeader>>(
-                cashHeader
-                .Where(c => c.Names.ToLower().Contains(Filter.ToLower()))
-                .OrderBy(c => c.Names)
-                .GroupBy(c => c.Names[0].ToString(), c => c)
-                .Select(g => new Grouping<string, CashHeader>(g.Key, g)));
-        }
+        //void Search()
+        //{
+        //    CashHeaders = new ObservableCollection<Grouping<string, CashHeader>>(
+        //        cashHeader
+        //        .Where(c => c.Names.ToLower().Contains(Filter.ToLower()))
+        //        .OrderBy(c => c.Names)
+        //        .GroupBy(c => c.Names[0].ToString(), c => c)
+        //        .Select(g => new Grouping<string, CashHeader>(g.Key, g)));
+        //}
 
         #endregion
 

@@ -9,19 +9,21 @@
     
     <ContentPage.Content>
         <StackLayout
+             Padding="10,10, 5, 5"
+                BackgroundColor="{StaticResource AccentColor1}"
                 BindingContext="{Binding SearchCashHeader}">
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="2.2*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Label
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label
                         VerticalOptions="Center"
                         HorizontalOptions="End"
                         Grid.Row="0"
@@ -29,35 +31,25 @@
                         WidthRequest="90"
                         TextColor="{StaticResource FontColor}"
                         Text="Cliente:">
-                </Label>
-                <Entry
+                    </Label>
+                    <Entry
                         BackgroundColor="White"
                         Text="{Binding Customer.Names, Mode=TwoWay}"
                         IsEnabled="false"
                         Placeholder="Seleccione un cliente..."
                         Grid.Row="0"
                         Grid.Column="1">
-                </Entry>
-                <Image
+                    </Entry>
+                    <Image
                         VerticalOptions="Center"
                         Source="ic_search.png"
                         Grid.Row="0"
                         Grid.Column="2">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchCustomerInvoiceCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
-            </Grid>
-
-
-            <SearchBar
-                    BackgroundColor="White"
-                    HeightRequest="60"
-                    Placeholder="Buscar..."
-                    Text="{Binding Filter, Mode=TwoWay}"
-                    SearchCommand="{Binding SearchCommand}">
-                </SearchBar>
-
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchCustomerInvoiceCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
 
                 <ListView
                 CachingStrategy="RecycleElement"
@@ -74,6 +66,19 @@
                     <ContentView 
                         Padding="0,5" 
                         BackgroundColor="{StaticResource AccentColor2}">
+
+                        <ContentView.Triggers>
+                            <DataTrigger
+										    TargetType="ContentView"
+										    Binding="{Binding CashHeaders.Count}"
+										    Value="0">
+                                <Setter
+											Property="IsVisible"
+											Value="False">
+                                </Setter>
+                            </DataTrigger>
+                        </ContentView.Triggers>
+
                         <Label 
                             FontAttributes="Bold"
                             FontSize="Large" 
