@@ -163,13 +163,21 @@
         //}
 
 
-        void CargarPagos()
+      public async void CargarPagos()
         {
-            CashHeaders = new ObservableCollection<CashHeader>>(
-                cashHeader
-                .OrderBy(s => s.Names)
-                .GroupBy(s => s.Names[0].ToString(), s => s)
-                .Select(g => new Grouping<string, CashHeader>(g.Key, g)));
+            try
+            {
+                var pagos = dataService
+                .Get<CashHeader>(true)
+                .Where(s => s.CustId == Customer.CustId)
+                .ToList();
+                CashHeaders = new ObservableCollection<CashHeader>(pagos);
+            }
+            catch (Exception ex)
+            {
+
+                await dialogService.ShowMessage("Error", ex.Message);
+            }
         }
 
         #endregion

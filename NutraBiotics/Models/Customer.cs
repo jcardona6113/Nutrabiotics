@@ -133,8 +133,10 @@
 
                         var searchvashheaderviewmodel = SearchCashHeaderViewModel.GetInstance();
                         searchvashheaderviewmodel.Customer = this;
+                        searchvashheaderviewmodel.CargarPagos();
                         await navigationService.Back();
                     }
+
                     catch (System.Exception ex)
                     {
                         await dialogService.ShowMessage("Error", ex.Message);
