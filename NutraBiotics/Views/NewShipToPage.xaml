@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		xmlns:control="clr-namespace:NutraBiotics.Controls"
+		x:Class="NutraBiotics.Views.NewShipToPage"
+		Title="Crear Sucursal"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem 
+				Command="{Binding SaveShipToCommand}"
+				Icon="ic_save.png">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+					BindingContext="{Binding NewShipTo}">
+                <StackLayout
+						BackgroundColor="{StaticResource AccentColor1}"
+						Spacing="12"
+						Padding="20,10,20,10">
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="ShipToNum:">
+                        </Label>
+                        <Entry
+								Placeholder="Ingrese ShipToNum..."
+								Text="{Binding ShipToNum, Mode=TwoWay}"
+								HorizontalOptions="FillAndExpand"
+								BackgroundColor="White">
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								VerticalOptions="Center"
+								HorizontalOptions="End"
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Territorio:">
+                        </Label>
+                        <control:BindablePicker
+								BackgroundColor="White"
+								Title="Territorio..."
+								DisplayMemberPath="TerritoryDesc"
+								SelectedValuePath="TerritoryEpicorID"
+								ItemsSource="{Binding Territories}"
+								SelectedValue ="{Binding Path=TerritoryEpicorID, Mode=TwoWay}"
+								HorizontalOptions="FillAndExpand">
+                        </control:BindablePicker>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Nombre sucursal:">
+                        </Label>
+                        <Entry
+								Placeholder="Ingrese nombre..."
+								Text="{Binding ShipToName, Mode=TwoWay}"
+								HorizontalOptions="FillAndExpand"
+								BackgroundColor="White">
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								VerticalOptions="Center"
+								HorizontalOptions="End"
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Pais:">
+                        </Label>
+                        <control:BindablePicker
+								BackgroundColor="White"
+								Title="Pais..."
+								DisplayMemberPath="Description"
+								SelectedValuePath="Description"
+								ItemsSource="{Binding Countries}"
+								SelectedValue ="{Binding Path=Description, Mode=TwoWay}"
+								HorizontalOptions="FillAndExpand">
+                        </control:BindablePicker>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Departamento:">
+                        </Label>
+                        <Entry
+								Placeholder="Ingrese departamento..."
+								Text="{Binding State, Mode=TwoWay}"
+								HorizontalOptions="FillAndExpand"
+								BackgroundColor="White">
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Ciudad:">
+                        </Label>
+                        <Entry
+								HorizontalTextAlignment="Start"
+								Placeholder="Ingrese ciudad..."
+								Text="{Binding City, Mode=TwoWay}"
+								HorizontalOptions="FillAndExpand"
+								BackgroundColor="White">
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Direccion: ">
+                        </Label>
+                        <Entry
+								BackgroundColor="White"
+								WidthRequest="100"
+								Placeholder="Ingrese direccion..."
+								HorizontalOptions="FillAndExpand"
+								Text="{Binding Address, Mode=TwoWay}"
+								>
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Celular:">
+                        </Label>
+                        <Entry
+								BackgroundColor="White"
+								Keyboard="Numeric"
+								WidthRequest="100"
+								Placeholder="Ingrese celular..."
+								HorizontalOptions="FillAndExpand"
+								Text="{Binding PhoneNum, Mode=TwoWay}">
+                        </Entry>
+                    </StackLayout>
+                    <StackLayout
+							Orientation="Horizontal">
+
+                        <Label
+								WidthRequest="100"
+								TextColor="{StaticResource FontColor}"
+								Text="Email:">
+                        </Label>
+                        <Entry
+								BackgroundColor="White"
+								Keyboard="Email"
+								WidthRequest="100"
+								Placeholder="Ingrese email..."
+								HorizontalOptions="FillAndExpand"
+								Text="{Binding Email, Mode=TwoWay}">
+                        </Entry>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

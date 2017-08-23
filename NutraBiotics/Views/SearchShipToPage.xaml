@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="NutraBiotics.Views.SearchShipToPage"
+    Title="Buscar Sucursal"
+    BackgroundColor="{StaticResource BackgroundColor}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding SearchShipTo}"
+            Padding="5">
+
+            <SearchBar
+                BackgroundColor="White"
+                HeightRequest="60"
+                Placeholder="Buscar..."
+                Text="{Binding Filter, Mode=TwoWay}"
+                SearchCommand="{Binding SearchCommand}">
+            </SearchBar>    
+
+            <ListView
+                CachingStrategy="RecycleElement"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                BackgroundColor="{StaticResource AccentColor1}"
+                SeparatorVisibility="Default"
+                ItemsSource="{Binding ShipToes}"
+                IsGroupingEnabled="True"
+                GroupDisplayBinding="{Binding Key}"
+                GroupShortNameBinding="{Binding Key}"
+                HasUnevenRows="True"> 
+
+                <ListView.Header>
+                    <ContentView 
+                        Padding="0,5" 
+                        BackgroundColor="{StaticResource AccentColor2}">
+                        <Label 
+                            FontAttributes="Bold"
+                            FontSize="Large" 
+                            TextColor="White"
+                            Text="Sucursales" 
+                            HorizontalTextAlignment="Center" 
+                            VerticalTextAlignment="Center" />
+                    </ContentView>
+                </ListView.Header>
+
+                
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                          <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout 
+                            Grid.Column="0">
+
+                                    <Label
+                                        FontAttributes="Bold"        
+                                        TextColor="{StaticResource FontColor}"
+                                        Text="{Binding ShipToNum, StringFormat='ShipToNum: {0}'}">
+                                    </Label>
+                                    <Label
+                                        FontAttributes="Bold"        
+                                        TextColor="{StaticResource FontColor}"
+                                        Text="{Binding ShipToName}">    
+                                    </Label>                                    
+                            <Label 
+                                TextColor="{StaticResource FontColor}"
+                                Text="{Binding Address}">
+                            </Label>                                    
+                            <Label 
+                                TextColor="{StaticResource FontColor}"
+                                Text="{Binding City}">
+                            </Label>                                    
+                        </StackLayout>        
+                        <Image 
+                            Grid.Column="1"
+                            Source="ic_chevron_right.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectRecordCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                      </Grid>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

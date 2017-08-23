@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NutraBiotics.Views.EditOrderDetailsPage"
+             BackgroundColor="{StaticResource BackgroundColor}"
+		     BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="{StaticResource AccentColor1}"
+            Spacing="12"
+            Padding="30, 15"
+			BindingContext="{Binding EditOrderDetails}">
+
+            <Label
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentColor2}"
+				HorizontalOptions="FillAndExpand"
+                FontSize="Medium"
+				TextColor="White"
+				Text="{Binding GridOrderDetail.PartDescription}">
+            </Label>
+
+            <StackLayout Orientation="Horizontal">
+                <Label
+						HorizontalOptions="Start"
+						WidthRequest="80"
+						TextColor="{StaticResource FontColor}"
+						Text="U. bonificadas:">
+                </Label>
+                <Entry
+                        Keyboard="Numeric"
+                        BackgroundColor="White"
+                        WidthRequest="200"
+						Text="{Binding GridOrderDetail.Reference, Mode=TwoWay}">
+                </Entry>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label
+						HorizontalOptions="Start"
+						WidthRequest="80"
+						TextColor="{StaticResource FontColor}"
+						Text="Cantidad:">
+                </Label>
+                <Entry
+                        BackgroundColor="White"
+                        WidthRequest="200"
+						Text="{Binding GridOrderDetail.Quantity, Mode=TwoWay}"
+						Keyboard="Numeric">
+                </Entry>
+            </StackLayout>
+            <Button
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentColor2}"
+                HorizontalOptions="FillAndExpand"
+                Text="Guardar"
+                Command="{Binding SaveChangesCommand}">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

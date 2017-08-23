@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:control="clr-namespace:NutraBiotics.Controls"
+            x:Class="NutraBiotics.Views.NewContactPage"
+            Title="Crear Contacto"
+            BackgroundColor="{StaticResource BackgroundColor}"
+            BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem 
+                Command="{Binding SaveContactCommand}"
+                Icon="ic_save.png">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="15">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+					BindingContext="{Binding NewContact}">
+                <Grid
+                    BackgroundColor="{StaticResource AccentColor1}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                        <Label
+                            HorizontalOptions="FillAndExpand"
+							WidthRequest="90"
+							TextColor="{StaticResource FontColor}"
+							Text="PersonContactID:">
+                        </Label>
+                        <Entry
+                            IsEnabled="False"
+							WidthRequest="120"
+							BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding PersonContact.PerConID, Mode=TwoWay}"
+							
+                            Placeholder="Ingrese PersonContactID">
+                        </Entry>
+                        <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png">
+                            <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SearchPersonContactCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    
+                    <Label
+                            HorizontalOptions="FillAndExpand"
+							Grid.Row="1"
+							Grid.Column="0"
+							WidthRequest="90"
+							TextColor="{StaticResource FontColor}"
+							Text="Nombre:">
+                    </Label>
+                    <Entry
+							WidthRequest="100"
+                            BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding PersonContact.Name, Mode=TwoWay}"
+                            Placeholder="Ingrese nombre"
+							Grid.Row="1"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							Grid.Row="2"
+							Grid.Column="0"
+							WidthRequest="90"
+							TextColor="{StaticResource FontColor}"
+							Text="Direccion:">
+                    </Label>
+                    <Entry
+							WidthRequest="100"
+                            BackgroundColor="White"
+							HorizontalTextAlignment="Start"
+							Text="{Binding PersonContact.Address1, Mode=TwoWay}"
+                            Placeholder="Ingrese direccion..."
+							Grid.Row="2"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							FontSize="Small"
+							Grid.Row="3"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="Celular:">
+                    </Label>
+                    <Entry
+							WidthRequest="100"
+                        Keyboard="Numeric"
+                         BackgroundColor="White"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Ingrese celular..."
+							Text="{Binding PersonContact.PhoneNum, Mode=TwoWay}"
+							Grid.Row="3"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							Grid.Row="4"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="Email:">
+                    </Label>
+                    <Entry
+                        Keyboard="Email"
+							WidthRequest="100"
+                            BackgroundColor="White"
+                            Placeholder="Ingrese email..."
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding PersonContact.EMailAdress, Mode=TwoWay}"
+							Grid.Row="4"
+							Grid.Column="1">
+                    </Entry>
+                    <Label
+                        Grid.Row="5"
+						Grid.Column="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        WidthRequest="90"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Pais">
+                    </Label>
+                    <control:BindablePicker
+                        Grid.Row="5"
+						Grid.Column="1"
+                        BackgroundColor="White"
+                        Title="Pais..."
+                        DisplayMemberPath="Description"
+                        SelectedValuePath="CountryId"
+                        ItemsSource="{Binding Countries}"
+                        SelectedValue ="{Binding Path=Description, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand">
+                    </control:BindablePicker>
+                    <Label
+                      Grid.Row="6"
+						Grid.Column="0"
+                             WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Departamento:">
+                </Label>
+                <Entry
+                      Grid.Row="6"
+						Grid.Column="1"
+                            Placeholder="Ingrese departamento..."
+							Text="{Binding PersonContact.State, Mode=TwoWay}"
+							
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="White">
+                </Entry>
+                <Label
+                      Grid.Row="7"
+						Grid.Column="0"
+                             WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Ciudad:">
+                </Label>
+                <Entry
+                      Grid.Row="7"
+						Grid.Column="1"
+							HorizontalTextAlignment="Start"
+                            Placeholder="Ingrese ciudad..."
+							Text="{Binding PersonContact.City, Mode=TwoWay}"
+							
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="White">
+                </Entry>
+                </Grid>
+
+                <ActivityIndicator
+                    HorizontalOptions="Center"
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                </ActivityIndicator>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+   
+

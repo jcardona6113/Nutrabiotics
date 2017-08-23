@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		x:Class="NutraBiotics.Views.EditCustomerPage"
+		Title="Editar Cliente"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <StackLayout
+				BindingContext="{Binding EditCustomer}">
+            <ScrollView>
+                <StackLayout
+						BackgroundColor="{StaticResource AccentColor1}">
+                    <Label
+							TextColor="White"
+							BackgroundColor="{StaticResource AccentColor2}"
+							Text="{Binding Customer.Names}"
+							FontSize="Large"
+							FontAttributes="Bold"
+							HorizontalOptions="FillAndExpand">
+                    </Label>
+
+                    <StackLayout
+							Orientation="Horizontal">
+
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Direccion:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								HorizontalTextAlignment="Start"
+								Text="{Binding Customer.Address}">
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Telefono:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								HorizontalTextAlignment="Start"
+								Text="{Binding Customer.PhoneNum}">
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Pais:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								HorizontalTextAlignment="Start"
+								Text="{Binding Customer.Country}">
+                        </Label>
+
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Departamento:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								HorizontalTextAlignment="Start"
+								Text="{Binding Customer.State}">
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Ciudad:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								HorizontalTextAlignment="Start"
+								Text="{Binding Customer.City}">
+                        </Label>
+
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Credito retenido:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								HorizontalOptions="Start">
+                            <Label.Triggers>
+                                <DataTrigger
+										TargetType="Label"
+										Binding="{Binding Customer.CreditHold}"
+										Value="true">
+                                    <Setter
+											Property="Text"
+											Value="Si">
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger
+										TargetType="Label"
+										Binding="{Binding Customer.CreditHold}"
+										Value="false">
+                                    <Setter
+											Property="Text"
+											Value="No">
+                                    </Setter>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout
+							Orientation="Horizontal">
+
+                        <Label
+								WidthRequest="120"
+								TextColor="{StaticResource FontColor}"
+								Text="Terminos:">
+                        </Label>
+                        <Label
+								WidthRequest="120"
+								VerticalOptions="Center"
+								Text="{Binding Customer.Terms}">
+                        </Label>
+
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+            <Button 
+					Command="{Binding NewShipToCommand}"
+					TextColor="White"
+					FontAttributes="Bold"
+					Text="Añadir sucursal"
+					BackgroundColor="{StaticResource AccentColor2}">
+            </Button>
+
+            <StackLayout>
+
+                <SearchBar
+						BackgroundColor="White"
+						HeightRequest="60"
+						Placeholder="Buscar..."
+						Text="{Binding Filter, Mode=TwoWay}"
+						SearchCommand="{Binding SearchCommand}">
+                </SearchBar>
+
+                <ListView
+						CachingStrategy="RecycleElement"
+						IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+						BackgroundColor="{StaticResource AccentColor1}"
+						SeparatorVisibility="Default"
+						ItemsSource="{Binding ShipToes}"
+						IsGroupingEnabled="True"
+						GroupDisplayBinding="{Binding Key}"
+						GroupShortNameBinding="{Binding Key}"
+						HasUnevenRows="True">
+
+                    <ListView.Header>
+                        <ContentView
+								Padding="0,5" 
+								BackgroundColor="{StaticResource AccentColor2}">
+
+                            <ContentView.Triggers>
+                                <DataTrigger
+										TargetType="ContentView"
+										Binding="{Binding ShipToes.Count}"
+										Value="0">
+                                    <Setter
+											Property="IsVisible"
+											Value="False">
+                                    </Setter>
+                                </DataTrigger>
+                            </ContentView.Triggers>
+                            <Label 
+									FontAttributes="Bold"
+									FontSize="Large" 
+									TextColor="White"
+									Text="Sucursales" 
+									HorizontalTextAlignment="Center" 
+									VerticalTextAlignment="Center" />
+                        </ContentView>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem 
+											Command="{Binding EditShipToCommand}" 
+											Text="Editar">
+                                    </MenuItem>
+                                    <MenuItem 
+											Command="{Binding DeleteShipToCommand}" 
+											IsDestructive="true"     
+											Text="Eliminar">
+                                    </MenuItem>
+                                </ViewCell.ContextActions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout 
+											Grid.Column="0">
+                                        <Label
+												FontAttributes="Bold"        
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding ShipToNum, StringFormat='SipToNum: {0}'}">
+                                        </Label>
+
+                                        <Label
+												FontAttributes="Bold"        
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding ShipToName}">
+                                        </Label>
+                                        <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding Address}">
+                                        </Label>
+                                        <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding City}">
+                                        </Label>
+                                    </StackLayout>
+                                    <Image 
+											Grid.Column="1"
+											Source="ic_chevron_right.png">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding EditShipToCommand}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

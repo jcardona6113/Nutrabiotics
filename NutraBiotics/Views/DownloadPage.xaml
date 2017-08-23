@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+        xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        x:Class="NutraBiotics.Views.DownloadPage"
+        Title="Descargar Maestros"
+        BackgroundColor="{StaticResource BackgroundColor}"
+        BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+            Padding="15"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource AccentColor1}"
+            BindingContext="{Binding Download}">
+
+                <StackLayout
+                Spacing="20"
+                HorizontalOptions="FillAndExpand">
+
+                    <StackLayout
+                    Orientation="Horizontal"
+                        WidthRequest="180">
+                        <Label
+                        WidthRequest="250"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="Start"
+                        Text="Descargar todos"
+                        VerticalOptions="Center">
+                        </Label>
+                        <Switch
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        IsToggled="{Binding DescargarTodos, Mode=TwoWay}">
+                        </Switch>
+                    </StackLayout>
+
+                    <StackLayout
+                    Orientation="Horizontal"
+                        WidthRequest="180">
+                        <Label
+                                        WidthRequest="250"
+                        HorizontalTextAlignment="Start"
+                        Text="Descargar clientes"
+                        VerticalOptions="Center">
+                        </Label>
+                        <Switch
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        IsToggled="{Binding DescargarClientes, Mode=TwoWay}">
+                        </Switch>
+                    </StackLayout>
+
+
+
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                        WidthRequest="250"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        Text="Descargar cartera">
+                        </Label>
+                        <Switch
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        IsToggled="{Binding DescargarCartera, Mode=TwoWay}">
+                        </Switch>
+                    </StackLayout>
+
+                    <ActivityIndicator
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                    </ActivityIndicator>
+                    <Label
+                    WidthRequest="250"
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource FontColor}"
+                    Text="{Binding Message, Mode=TwoWay}">
+                    </Label>
+                    <Button
+                    Command="{Binding DownloadCommand}"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    BackgroundColor="{StaticResource AccentColor2}"
+                    HeightRequest="60"
+                    BorderRadius="20"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Text="Iniciar Descarga">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

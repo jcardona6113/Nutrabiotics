@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="NutraBiotics.Views.SearchInvoicesPage"
+    Icon="ic_searchwhite.png"
+    Title="Buscar Facturas"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <StackLayout
+                BindingContext="{Binding SearchInvoices}"
+                Padding="5">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2.2*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        WidthRequest="90"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Cliente:">
+                </Label>
+                <Entry
+                        BackgroundColor="White"
+                        Text="{Binding Customer.Names, Mode=TwoWay}"
+                        IsEnabled="false"
+                        Placeholder="Seleccione un cliente..."
+                        Grid.Row="0"
+                        Grid.Column="1">
+                </Entry>
+                <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png"
+                        Grid.Row="0"
+                        Grid.Column="2">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchCustomerInvoiceCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        WidthRequest="90"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Calendario:">
+                </Label>
+                <Entry
+                        BackgroundColor="White"
+                        Text="{Binding Calendar.Description, Mode=TwoWay}"
+                        IsEnabled="false"
+                        Placeholder="Seleccione un calendario..."
+                        Grid.Row="1"
+                        Grid.Column="1">
+                </Entry>
+                <Image
+                        VerticalOptions="Center"
+                        Source="ic_search.png"
+                        Grid.Row="1"
+                        Grid.Column="2">
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SearchCalendarCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+            <Button
+                WidthRequest="200"
+                Command="{Binding SearchCommand}"
+                HorizontalOptions="FillAndExpand"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentColor2}"
+                Text="Buscar">
+            </Button>
+            
+            <StackLayout>
+                    <ListView
+								BackgroundColor="{StaticResource AccentColor1}"
+								SeparatorVisibility="Default"
+								ItemsSource="{Binding InvoiceHeaders}"
+								HasUnevenRows="True">
+                        <ListView.Header>
+                        <ContentView
+										Padding="0,5" 
+										BackgroundColor="{StaticResource AccentColor2}">
+                            <ContentView.Triggers>
+                                <DataTrigger
+										    TargetType="ContentView"
+										    Binding="{Binding InvoiceHeaders.Count}"
+										    Value="0">
+                                    <Setter
+											Property="IsVisible"
+											Value="False">
+                                    </Setter>
+                                </DataTrigger>
+                            </ContentView.Triggers>
+                                <Label 
+											FontAttributes="Bold"
+											FontSize="Large" 
+											TextColor="White"
+											Text="Facturas" 
+											HorizontalTextAlignment="Center" 
+											VerticalTextAlignment="Center" />
+                            </ContentView>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout 
+													Grid.Column="0">
+                                            <Label
+														FontAttributes="Bold"        
+														TextColor="{StaticResource FontColor}"
+														Text="{Binding InvoiceNum}">
+                                            </Label>
+                                        <Label 
+														TextColor="{StaticResource FontColor}"
+														Text="{Binding InvoiceAmt, StringFormat='Monto: {0:C2}'}">
+                                        </Label>
+                                            <Label 
+														TextColor="{StaticResource FontColor}"
+														Text="{Binding InvoiceDate, StringFormat='{0:yyyy/MM/dd}'}">
+                                            </Label>
+                                        </StackLayout>
+                                        <Image 
+													Grid.Column="1"
+													Source="ic_chevron_right.png">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ViewInvoiceDetailCommand}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

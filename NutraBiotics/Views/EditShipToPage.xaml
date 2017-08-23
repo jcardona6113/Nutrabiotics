@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		x:Class="NutraBiotics.Views.EditShipToPage"
+                xmlns:control="clr-namespace:NutraBiotics.Controls"
+		Title="Editar sucursal"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem 
+				Command="{Binding EditShipToCommand}"
+				Icon="ic_save.png">
+        </ToolbarItem>
+        <ToolbarItem 
+				Command="{Binding DeleteShipToCommand}"
+				Icon="ic_delete_forever.png">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="15">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+					BindingContext="{Binding EditShipTo}">
+                <StackLayout
+                    BackgroundColor="{StaticResource AccentColor1}">
+                    <Label
+						TextColor="White"
+						BackgroundColor="{StaticResource AccentColor2}"
+						Text="{Binding ShipTo.ShipToName}"
+						FontSize="Large"
+						FontAttributes="Bold"
+						HorizontalOptions="FillAndExpand">
+                    </Label>
+
+                    <StackLayout
+                    Orientation="Horizontal">
+                        <Label
+                            WidthRequest="100"
+							VerticalOptions="Center"
+							TextColor="{StaticResource FontColor}"
+							Text="ShipToNum:">
+                        </Label>
+                        <Entry
+                            IsEnabled="False"
+                            WidthRequest="200"
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+                            HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.ShipToNum, Mode=TwoWay}">
+                        </Entry>
+
+                    </StackLayout>
+
+
+                    <StackLayout
+                    Orientation="Horizontal">
+
+                        <Label
+							VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="TerritoryID:">
+                        </Label>
+
+                        <control:BindablePicker
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="White"
+                            Title="Territory..."
+                            DisplayMemberPath="TerritoryDesc"
+                            SelectedValuePath="TerritoryEpicorID"
+                            ItemsSource="{Binding Territories}"
+                            SelectedValue="{Binding Path=ShipTo.TerritoryEpicorID, Mode=TwoWay}">
+                        </control:BindablePicker>
+                    </StackLayout>
+
+                    <StackLayout
+                    Orientation="Horizontal">
+
+                        <Label
+							VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Nombre:">
+                        </Label>
+                        <Entry
+                            WidthRequest="180"
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.ShipToName, Mode=TwoWay}">
+
+                        </Entry>
+                    </StackLayout>
+
+
+                    <StackLayout
+                    Orientation="Horizontal">
+
+                        <Label
+                        	VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Pais:">
+                        </Label>
+                        
+                        <control:BindablePicker
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="White"
+                            Title="Pais..."
+                            DisplayMemberPath="Description"
+                            SelectedValuePath="Description"
+                            ItemsSource="{Binding Countries}"
+                            SelectedValue="{Binding Path=ShipTo.Country, Mode=TwoWay}">
+                        </control:BindablePicker>
+                    </StackLayout>
+
+                    <StackLayout
+                    Orientation="Horizontal">
+                        <Label
+                        	VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Departamento:">
+                        </Label>
+                        <Entry
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.State, Mode=TwoWay}">
+
+                        </Entry>
+                    </StackLayout>
+
+
+                    <StackLayout
+                    Orientation="Horizontal">
+
+                        <Label
+                        	VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Ciudad:">
+                        </Label>
+                        <Entry
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.City, Mode=TwoWay}">
+
+                        </Entry>
+                    </StackLayout>
+
+
+                    <StackLayout
+                    Orientation="Horizontal">
+
+                        <Label
+                        	VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Direccion: ">
+                        </Label>
+                        <Editor
+                            WidthRequest="180"
+                            HeightRequest="150"
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+						    HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.Address, Mode=TwoWay}">
+                        </Editor>
+                    </StackLayout>
+
+
+                    <StackLayout
+                    Orientation="Horizontal">
+                        <Label
+                        	VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Celular:">
+                        </Label>
+                        <Entry
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            Keyboard="Numeric"
+                            BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.PhoneNum, Mode=TwoWay}">
+
+                        </Entry>
+
+                    </StackLayout>
+
+
+                    <StackLayout
+                    Orientation="Horizontal">
+
+                        <Label
+                        	VerticalOptions="Center"
+							WidthRequest="100"
+							TextColor="{StaticResource FontColor}"
+							Text="Email: ">
+                        </Label>
+                        <Entry
+                        	VerticalOptions="Center"
+                            TextColor="{StaticResource FontColor}"
+                            Keyboard="Email"
+                            BackgroundColor="White"
+							HorizontalOptions="FillAndExpand"
+							Text="{Binding ShipTo.Email, Mode=TwoWay}">
+
+                        </Entry>
+                    </StackLayout>
+                </StackLayout>
+
+
+                <!--AQUI IBAN LOS CONTACTOS DEL SHIPTO
+                <Button 
+                    Command="{Binding NewContactCommand}"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Text="Añadir contacto"
+                    BackgroundColor="{StaticResource AccentColor2}">
+                </Button>-->
+
+                <!--<StackLayout>
+                    <ListView
+                            BackgroundColor="{StaticResource AccentColor1}"
+							SeparatorVisibility="Default"
+							ItemsSource="{Binding Contacts}"
+							HasUnevenRows="True">
+                        <ListView.Header>
+                            <ContentView 
+									Padding="0,5" 
+								    BackgroundColor="{StaticResource AccentColor2}">
+                                <Label 
+                                        FontAttributes="Bold"
+										FontSize="Large" 
+										TextColor="White"
+										Text="Contactos" 
+										HorizontalTextAlignment="Center" 
+										VerticalTextAlignment="Center" />
+                            </ContentView>
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem 
+												Command="{Binding EditContactCommand}" 
+												Text="Editar">
+                                        </MenuItem>
+                                        <MenuItem 
+												Command="{Binding DeleteContactCommand}" 
+												IsDestructive="true"     
+												Text="Eliminar">
+                                        </MenuItem>
+                                    </ViewCell.ContextActions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackLayout 
+												Grid.Column="0">
+                                            <Label
+													FontAttributes="Bold"        
+													TextColor="{StaticResource FontColor}"
+													Text="{Binding Name}">
+                                            </Label>
+                                            <Label 
+													TextColor="{StaticResource FontColor}"
+													Text="{Binding Address}">
+                                            </Label>
+                                            <Label 
+													TextColor="{StaticResource FontColor}"
+													Text="{Binding PhoneNum}">
+                                            </Label>
+                                        </StackLayout>
+                                        <Image 
+												Grid.Column="1"
+												Source="ic_chevron_right.png">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding EditContactCommand}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label
+							FontSize="Small"
+							FontAttributes="Bold"
+							HorizontalOptions="CenterAndExpand"
+							TextColor="{StaticResource FontColor}"
+							Text="{Binding Result}">
+                    </Label>
+                </StackLayout>-->
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+
+

@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="NutraBiotics.Views.UploadPage"
+		Title="Subir Maestros"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+            Padding="15"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource AccentColor1}"
+            BindingContext="{Binding Upload}">
+
+                <StackLayout
+                Spacing="20"
+                WidthRequest="200">
+
+                    <StackLayout
+					Orientation="Horizontal"
+                        WidthRequest="180">
+                        <Label
+                        HorizontalTextAlignment="Start"
+						Text="Seleccionar todos:"
+                        VerticalOptions="Center">
+                        </Label>
+                        <Switch
+                        VerticalOptions="Center"
+						HorizontalOptions="End"
+						IsToggled="{Binding SeleccionarTodos, Mode=TwoWay}">
+                        </Switch>
+                    </StackLayout>
+                    <StackLayout
+					Orientation="Horizontal"
+                        WidthRequest="180">
+                        <Label
+                        HorizontalTextAlignment="Start"
+						Text="Cargar sucursales"
+                        VerticalOptions="Center">
+                        </Label>
+                        <Switch
+                        VerticalOptions="Center"
+						HorizontalOptions="End"
+						IsToggled="{Binding SubirShipToes, Mode=TwoWay}">
+                        </Switch>
+                    </StackLayout>
+
+                    <StackLayout
+					Orientation="Horizontal">
+                        <Label
+                        VerticalOptions="Center"
+                      HorizontalOptions="Start"
+						Text="Cargar contactos">
+                        </Label>
+                        <Switch
+                        VerticalOptions="Center"
+						HorizontalOptions="End"
+						IsToggled="{Binding SubirContactos, Mode=TwoWay}">
+                        </Switch>
+                    </StackLayout>
+
+                    <ActivityIndicator
+					IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                    </ActivityIndicator>
+                    <Label
+					HorizontalOptions="Center"
+					TextColor="{StaticResource FontColor}"
+					Text="{Binding Message, Mode=TwoWay}">
+                    </Label>
+                    <Button
+					Command="{Binding UploadCommand}"
+					IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+					BackgroundColor="{StaticResource AccentColor2}"
+					HeightRequest="60"
+					BorderRadius="20"
+					TextColor="White"
+					FontAttributes="Bold"
+					Text="Iniciar Carga">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

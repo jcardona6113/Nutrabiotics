@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NutraBiotics.Views.EditContactPage"
+            Title="Editar Contacto"
+            BackgroundColor="{StaticResource BackgroundColor}"
+            BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <!--<TabbedPage.ToolbarItems>
+        <ToolbarItem 
+                Command="{Binding EditContactCommand}"
+                Icon="ic_save.png">
+        </ToolbarItem>
+        <ToolbarItem 
+                Command="{Binding DeleteContactCommand}"
+                Icon="ic_delete_forever.png">
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>-->
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="15">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+					BindingContext="{Binding EditContact}">
+                <Label
+						TextColor="White"
+						BackgroundColor="{StaticResource AccentColor2}"
+						Text="{Binding Contact.Name}"
+						FontSize="Large"
+						FontAttributes="Bold"
+						HorizontalOptions="FillAndExpand">
+                </Label>
+                <Grid
+                    BackgroundColor="{StaticResource AccentColor1}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+							VerticalOptions="Center"
+							Grid.Row="0"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="PerConID:">
+                    </Label>
+                    <Entry
+                            TextColor="{StaticResource FontColor}"
+							WidthRequest="100"
+							HorizontalTextAlignment="Start"
+                            BackgroundColor="White"
+							Text="{Binding Contact.PerConID, Mode=TwoWay}"
+							Grid.Row="0"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							VerticalOptions="Center"
+							Grid.Row="1"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="Nombre:">
+                    </Label>
+                    <Entry
+                            TextColor="{StaticResource FontColor}"
+							WidthRequest="100"
+							HorizontalTextAlignment="Start"
+                            BackgroundColor="White"
+							Text="{Binding Contact.Name, Mode=TwoWay}"
+							Grid.Row="1"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							Grid.Row="2"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="Direccion:">
+                    </Label>
+                    <Entry
+                            TextColor="{StaticResource FontColor}"
+                            BackgroundColor="White"
+							WidthRequest="100"
+							HorizontalTextAlignment="Start"
+							Text="{Binding Contact.Address, Mode=TwoWay}"
+							Grid.Row="2"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							Grid.Row="3"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="Celular:">
+                    </Label>
+                    <Entry
+                            TextColor="{StaticResource FontColor}"
+                            Keyboard="Numeric"
+                            BackgroundColor="White"
+							WidthRequest="100"
+							HorizontalTextAlignment="Start"
+							Text="{Binding Contact.PhoneNum, Mode=TwoWay}"
+							Grid.Row="3"
+							Grid.Column="1">
+                    </Entry>
+
+                    <Label
+							Grid.Row="4"
+							Grid.Column="0"
+							WidthRequest="80"
+							TextColor="{StaticResource FontColor}"
+							Text="Email:">
+                    </Label>
+
+                    <Entry
+                            TextColor="{StaticResource FontColor}"
+                            Keyboard="Email"
+                            BackgroundColor="White"
+							WidthRequest="100"
+							HorizontalTextAlignment="Start"
+							Text="{Binding Contact.Email, Mode=TwoWay}"
+							
+							Grid.Row="4"
+							Grid.Column="1">
+                    </Entry>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+   
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+    x:Class="NutraBiotics.Views.MenuPage"
+    Title="Menu"
+    BackgroundColor="{StaticResource AccentColor1}"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+	<ContentPage.Content>
+        <StackLayout
+            Padding="5,20,5,5">
+            <Image
+                WidthRequest="300"
+                Source="Logo.png">
+            </Image>
+            <Label
+                TextColor="{StaticResource FontColor}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                FontSize="Large"
+                Text="{Binding User.FullName, StringFormat='Bienvenido: {0}'}">
+            </Label>
+            <ListView
+                BackgroundColor="{StaticResource BackgroundColor}"
+                SeparatorVisibility="None"
+                ItemsSource="{Binding Menu}"
+                HasUnevenRows="True">   
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <Grid>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                        </Grid.GestureRecognizers>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto"></ColumnDefinition>
+                          <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image 
+                            Grid.Column="0"
+                            Source="{Binding Icon}"
+                            WidthRequest="65"
+                            HeightRequest="65"/>
+                        <Label
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            FontSize="Medium"
+                            Text="{Binding Title}"/>
+                      </Grid>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

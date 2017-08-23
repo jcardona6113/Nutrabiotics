@@ -1,0 +1,22 @@
+﻿namespace NutraBiotics.Helpers
+{
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+
+	public class Grouping<K, T> : ObservableCollection<T>
+	{
+		public K Key { get; private set; }
+        public object Names { get; internal set; }
+        public object CustNum { get; internal set; }
+        public object InvoiceNum { get; internal set; }
+
+        public Grouping(K key, IEnumerable<T> items)
+		{
+			Key = key;
+			foreach (var item in items)
+			{
+				this.Items.Add(item);
+			}
+		}
+	}
+}

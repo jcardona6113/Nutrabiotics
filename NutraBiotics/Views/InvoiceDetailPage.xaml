@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="NutraBiotics.Views.InvoiceDetailPage"
+		Title="Detalle factura"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.Content>
+        <StackLayout
+					BindingContext="{Binding InvoiceDetail}"
+					Padding="5">
+            <ListView
+						BackgroundColor="White"
+						SeparatorVisibility="Default"
+						ItemsSource="{Binding InvoiceDetails}"
+						HasUnevenRows="True">
+
+                <ListView.Footer>
+                    <ContentView 
+								Padding="0,5" 
+								BackgroundColor="{StaticResource AccentColor2}">
+                        <Label 
+									FontSize="Large"
+									FontAttributes="Bold"
+									TextColor="White"
+									Text="{Binding TotalLineas, StringFormat='Total: {0:C2}'}" 
+									HorizontalTextAlignment="End" 
+									VerticalTextAlignment="Center" />
+                    </ContentView>
+                </ListView.Footer>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout>
+                                    <Label
+												FontSize="Medium"
+												BackgroundColor="{StaticResource AccentColor2}"
+												FontAttributes="Bold"                                                
+												TextColor="White"       
+												VerticalOptions="Center"
+												Text="{Binding PartDescription}">
+                                    </Label>
+                                    <StackLayout
+												Orientation="Horizontal">
+                                        <StackLayout
+													HorizontalOptions="StartAndExpand"
+													VerticalOptions="Center">
+                                            <Label
+														TextColor="{StaticResource FontColor}"       
+														Text="{Binding PartNum, StringFormat='PartNum.: {0}'}">
+                                            </Label>
+                                            <Label
+														TextColor="{StaticResource FontColor}"       
+														Text="{Binding UnitPrice, StringFormat='Precio Unit.: {0:C2}'}">
+                                            </Label>
+                                            <Label
+														TextColor="{StaticResource FontColor}"       
+														Text="{Binding OurShipQty, StringFormat='Cantidad: {0:N2}'}">
+                                            </Label>
+                                        </StackLayout>
+                                        <Label
+													HorizontalOptions="End"
+													VerticalOptions="Center"       
+													FontSize="Large"
+													FontAttributes="Bold"                                                
+													TextColor="{StaticResource FontColor}"       
+													Text="{Binding Value, StringFormat='{0:C2}'}">
+                                        </Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

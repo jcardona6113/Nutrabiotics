@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="NutraBiotics.Views.OrdersPage"
+		Title="Ordenes"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem 
+				Command="{Binding RefreshOrdersNumCommand}"
+				Icon="ic_refresh.png">
+        </ToolbarItem>
+
+        <ToolbarItem 
+				Command="{Binding NewOrderCommand}"
+				Icon="ic_add_circle_outline.png">
+        </ToolbarItem>
+        <ToolbarItem 
+				Command="{Binding SyncOrdersCommand}"
+				Icon="ic_cloud_upload.png">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout
+				BindingContext="{Binding Orders}"
+				Padding="8">
+
+            <StackLayout
+					HorizontalOptions="FillAndExpand"
+					Orientation="Horizontal"
+					Padding="10, 15,0,0">
+
+                <Label
+                        VerticalOptions="Center"
+                        TextColor="White"
+						Text="Fecha:"
+						FontAttributes="Bold"
+						FontSize="Medium"
+						HorizontalOptions="Start">
+                </Label>
+
+                <DatePicker
+                        VerticalOptions="Center"
+                        HorizontalOptions="FillAndExpand"
+						WidthRequest="180"
+						BackgroundColor="White"
+						Date="{Binding OrderDate}"
+						DateSelected="RefreshList">
+                </DatePicker>
+            </StackLayout>
+            
+            <ListView
+					IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+					BackgroundColor="White"
+					SeparatorVisibility="Default"
+					ItemsSource="{Binding OrderList}"
+					HasUnevenRows="True">
+                <ListView.Header>
+                    <ContentView 
+							Padding="0,5" 
+							BackgroundColor="{StaticResource AccentColor2}">
+                        <Label 
+								FontAttributes="Bold"
+								FontSize="Large" 
+								TextColor="White"
+								Text="Ordenes" 
+								HorizontalTextAlignment="Center" 
+								VerticalTextAlignment="Center" />
+                    </ContentView>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem 
+										Command="{Binding EditOrderCommand}" 
+										Text="Editar">
+                                </MenuItem>
+                                <MenuItem 
+										Command="{Binding DeleteOrderCommand}" 
+										IsDestructive="true"     
+										Text="Eliminar">
+                                </MenuItem>
+                            </ViewCell.ContextActions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout 
+										Margin="5,0,0,0"        
+										Grid.Column="0">
+                                    <Label
+											FontSize="Medium"
+											FontAttributes="Bold"       
+											VerticalOptions="Center"
+											TextColor="{StaticResource FontColor}"
+											Text="{Binding Customer.Names}">
+
+                                        <Label.Triggers>
+                                            <DataTrigger
+													TargetType="Label"
+													Binding="{Binding CreditHold}"
+													Value="true">
+                                                <Setter
+														Property="TextColor"
+														Value="Red">
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label 
+											Margin="0,0,5,0"        
+											VerticalOptions="Center"
+											TextColor="{StaticResource FontColor}"
+											Text="{Binding OrderNum, StringFormat='# Orden: {0}'}">
+                                    </Label>
+
+                                    <Label 
+											Margin="0,0,5,0"        
+											VerticalOptions="Center"
+											TextColor="{StaticResource FontColor}"
+											Text="{Binding Date, StringFormat='{0:yyyy/MM/dd}'}">
+                                    </Label>
+                                    <Label
+											FontSize="Micro"
+											FontAttributes="Bold"       
+											VerticalOptions="Center"
+											TextColor="{StaticResource FontColor}">
+
+                                        <Label.Triggers>
+                                            <DataTrigger
+													TargetType="Label"
+													Binding="{Binding RowMod}"
+													Value="D">
+                                                <Setter
+														Property="Text"
+														Value="Sincronize para eliminar">
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger
+													TargetType="Label"
+													Binding="{Binding RowMod}"
+													Value="D">
+                                                <Setter
+														Property="TextColor"
+														Value="Red">
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </StackLayout>
+
+                                <Label 
+										HorizontalTextAlignment="End"        
+										Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        WidthRequest="120"
+										VerticalOptions="Start"
+										TextColor="{StaticResource FontColor}"
+										Text="{Binding TaxAmt, StringFormat='Iva: {0:C2}'}">
+                                </Label>
+
+                                <Label 
+                                        HorizontalTextAlignment="End"        
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center"
+                                        TextColor="{StaticResource FontColor}"
+                                        Text="{Binding Total, StringFormat='Total: {0:C2}'}">
+                                </Label>
+                                
+                                <Label
+                                            HorizontalTextAlignment="End"
+                                            FontAttributes="Bold"
+                                            VerticalOptions="End"
+                                            FontSize="Small">
+                                    <Image.Triggers>
+                                        <DataTrigger
+													TargetType="Label"
+													Binding="{Binding IsSync}"
+													Value="True">
+                                            <Setter
+														Property="Text"
+														Value="Sincronizada">
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger
+													TargetType="Label"
+													Binding="{Binding IsSync}"
+													Value="True">
+                                            <Setter
+														Property="TextColor"
+														Value="Green">
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
