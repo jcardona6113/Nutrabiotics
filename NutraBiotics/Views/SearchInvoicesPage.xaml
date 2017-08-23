@@ -12,7 +12,8 @@
                 BindingContext="{Binding SearchInvoices}"
                 Padding="5">
 
-            <Grid>
+            <Grid
+                RowSpacing="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -29,7 +30,7 @@
                         Grid.Column="0"
                         WidthRequest="90"
                         TextColor="{StaticResource FontColor}"
-                        Text="Cliente:">
+                        Text="Cliente">
                 </Label>
                 <Entry
                         BackgroundColor="White"
@@ -56,7 +57,7 @@
                         Grid.Column="0"
                         WidthRequest="90"
                         TextColor="{StaticResource FontColor}"
-                        Text="Calendario:">
+                        Text="Calendario">
                 </Label>
                 <Entry
                         BackgroundColor="White"
@@ -183,8 +184,8 @@
                                                     Binding="{Binding ColorGrilla}"
                                                     Value="Rojo">
                                                     <Setter
-                                                        Property="TextColor"
-                                                        Value="Red">
+                                                        Property="BackgroundColor"
+                                                        Value="#F75D70">
                                                     </Setter>
                                                 </DataTrigger>
 
@@ -193,8 +194,8 @@
                                                         Binding="{Binding ColorGrilla}"
                                                         Value="Naranja">
                                                     <Setter
-                                                        Property="TextColor"
-                                                        Value="Orange">
+                                                        Property="BackgroundColor"
+                                                        Value="#FF8A33">
                                                     </Setter>
                                                 </DataTrigger>
                                                 <DataTrigger
@@ -202,8 +203,8 @@
                                                         Binding="{Binding ColorGrilla}"
                                                         Value="Amarillo">
                                                     <Setter
-                                                        Property="TextColor"
-                                                        Value="Yellow">
+                                                        Property="BackgroundColor"
+                                                        Value="#FFCE33">
                                                     </Setter>
                                                 </DataTrigger>
                                                 <DataTrigger
@@ -211,8 +212,8 @@
                                                         Binding="{Binding ColorGrilla}"
                                                         Value="Verde">
                                                     <Setter
-                                                        Property="TextColor"
-                                                        Value="Green">
+                                                        Property="BackgroundColor"
+                                                        Value="#33FF61">
                                                     </Setter>
                                                 </DataTrigger>
                                             </Label.Triggers>
