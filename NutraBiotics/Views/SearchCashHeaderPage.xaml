@@ -51,7 +51,17 @@
                     </Image>
                 </Grid>
 
-                <ListView
+            <Button
+                WidthRequest="200"
+                Command="{Binding SearchCommand}"
+                HorizontalOptions="FillAndExpand"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentColor2}"
+                Text="Buscar">
+            </Button>
+
+            <ListView
                 CachingStrategy="RecycleElement"
                 IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                 BackgroundColor="{StaticResource AccentColor1}"
@@ -101,14 +111,13 @@
                                 <StackLayout 
                             Grid.Column="0">
                                     <Label
-                                FontAttributes="Bold"   
-                                TextColor="{StaticResource FontColor}"
-                                Text="{Binding HeadNum, StringFormat='Numero pago: {0} '}">
-                                    </Label>
-
-                                    <Label
                                 TextColor="{StaticResource FontColor}"
                                 Text="{Binding InvoiceNum, StringFormat='Numero factura: {0} '}">
+                                    </Label>
+                                    
+                                    <Label 
+										TextColor="{StaticResource FontColor}"
+										Text="{Binding TranDate, StringFormat='Fecha pago.:{0:yyyy/MM/dd}'}">
                                     </Label>
 
                                     <Label 
@@ -118,7 +127,7 @@
                                     <Label 
                                  FontAttributes="Bold"
                                 TextColor="{StaticResource FontColor}"
-                                Text="{Binding TranAmt, StringFormat='Total: {0:C2}'}">
+                                Text="{Binding TranAmt, StringFormat='Valor pago: {0:C2}'}">
                                     </Label>
                                 </StackLayout>
                                 <Image 

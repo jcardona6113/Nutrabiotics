@@ -19,6 +19,8 @@ namespace NutraBiotics.Models
 
         public decimal Total { get; set; }
 
+        public string Platform { get; set; }
+
         public int InvoiceNum { get; set; }
 
         public bool Facturado { get; set; }

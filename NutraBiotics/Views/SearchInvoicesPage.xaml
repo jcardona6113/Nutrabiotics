@@ -25,6 +25,7 @@
                 <Label
                         VerticalOptions="Center"
                         HorizontalOptions="End"
+                    FontSize="Medium"
                         Grid.Row="0"
                         Grid.Column="0"
                         WidthRequest="90"
@@ -32,6 +33,7 @@
                         Text="Cliente:">
                 </Label>
                 <Entry
+                              FontSize="Medium"
                         BackgroundColor="White"
                         Text="{Binding Customer.Names, Mode=TwoWay}"
                         IsEnabled="false"
@@ -50,6 +52,7 @@
                 </Image>
 
                 <Label
+                              FontSize="Medium"
                         VerticalOptions="Center"
                         HorizontalOptions="End"
                         Grid.Row="1"
@@ -59,6 +62,7 @@
                         Text="Calendario:">
                 </Label>
                 <Entry
+                              FontSize="Medium"
                         BackgroundColor="White"
                         Text="{Binding Calendar.Description, Mode=TwoWay}"
                         IsEnabled="false"
@@ -76,6 +80,23 @@
                         <TapGestureRecognizer Command="{Binding SearchCalendarCommand}"/>
                     </Image.GestureRecognizers>
                 </Image>
+                <Label
+                              FontSize="Medium"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                    HorizontalOptions="End"
+                        WidthRequest="90"
+                        Text="Facturas con saldo"
+                        VerticalOptions="Center">
+                </Label>
+                <Switch
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        IsToggled="{Binding FacturaConSaldo, Mode=TwoWay}">
+                </Switch>
+
             </Grid>
             <Button
                 WidthRequest="200"
@@ -120,27 +141,237 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
+                                <Grid
+                                    BackgroundColor="White">
+                                    <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"></ColumnDefinition>
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <StackLayout 
 													Grid.Column="0">
-                                            <Label
+                                        <Label
 														FontAttributes="Bold"        
 														TextColor="{StaticResource FontColor}"
-														Text="{Binding InvoiceNum}">
-                                            </Label>
+														Text="{Binding InvoiceNum, StringFormat='Numero Fact.: {0}'}">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding ColorGrilla}"
+                                        Value="Rojo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Red">
+                                                    </Setter>
+                                                </DataTrigger>
+
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Naranja">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Orange">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Amarillo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Yellow">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Verde">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Green">
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+
+                                            <Label 
+														TextColor="{StaticResource FontColor}"
+														Text="{Binding InvoiceDate, StringFormat='Fecha Fact.: {0:yyyy/MM/dd}'}">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding ColorGrilla}"
+                                        Value="Rojo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Red">
+                                                    </Setter>
+                                                </DataTrigger>
+
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Naranja">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Orange">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Amarillo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Yellow">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Verde">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Green">
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+
+
+                                        </Label>
+                                        <Label 
+														TextColor="{StaticResource FontColor}"
+														Text="{Binding DueDate, StringFormat='Fecha vcto.: {0:yyyy/MM/dd}'}">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding ColorGrilla}"
+                                        Value="Rojo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Red">
+                                                    </Setter>
+                                                </DataTrigger>
+
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Naranja">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Orange">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Amarillo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Yellow">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Verde">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Green">
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+
+                                        </Label>
                                         <Label 
 														TextColor="{StaticResource FontColor}"
 														Text="{Binding InvoiceAmt, StringFormat='Monto: {0:C2}'}">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding ColorGrilla}"
+                                        Value="Rojo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Red">
+                                                    </Setter>
+                                                </DataTrigger>
+
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Naranja">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Orange">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Amarillo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Yellow">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Verde">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Green">
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+
                                         </Label>
-                                            <Label 
+                                        <Label 
 														TextColor="{StaticResource FontColor}"
-														Text="{Binding InvoiceDate, StringFormat='{0:yyyy/MM/dd}'}">
-                                            </Label>
-                                        </StackLayout>
+														Text="{Binding InvoiceBal, StringFormat='Saldo: {0:C2}'}">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding ColorGrilla}"
+                                        Value="Rojo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Red">
+                                                    </Setter>
+                                                </DataTrigger>
+
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Naranja">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Orange">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Amarillo">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Yellow">
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                        TargetType="Label"
+                                                        Binding="{Binding ColorGrilla}"
+                                                        Value="Verde">
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="Green">
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+
+                                        </Label>
+                                    </StackLayout>
                                         <Image 
 													Grid.Column="1"
 													Source="ic_chevron_right.png">

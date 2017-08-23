@@ -21,8 +21,9 @@ namespace NutraBiotics.ViewModels
         List<InvoiceHeader> invoiceHeaders;
         Customer _customer;
         bool _isRefreshing;
-        string _filter;
         Calendar _calendar;
+        TimeSpan _diasvencido;
+        bool _facturaconsaldo;
         #endregion
 
         #region Services
@@ -54,6 +55,24 @@ namespace NutraBiotics.ViewModels
             get
             {
                 return _isRefreshing;
+            }
+        }
+
+        public bool FacturaConSaldo
+        {
+            set
+            {
+                if (_facturaconsaldo != value)
+                {
+                    _facturaconsaldo = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(FacturaConSaldo)));
+                }
+            }
+            get
+            {
+                return _facturaconsaldo;
             }
         }
 
@@ -91,7 +110,6 @@ namespace NutraBiotics.ViewModels
             }
         }
 
-
         public ObservableCollection<InvoiceHeader> InvoiceHeaders
         {
             set
@@ -120,10 +138,7 @@ namespace NutraBiotics.ViewModels
             dataService = new DataService();
             dialogService = new DialogService();
             navigationService = new NavigationService();
-
             InvoiceHeaders = new ObservableCollection<InvoiceHeader>();
-
-
         }
 
         #endregion
@@ -214,11 +229,22 @@ namespace NutraBiotics.ViewModels
                     return;
                 }
 
-                var invoices = dataService
-                .Get<InvoiceHeader>(true)
-                .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
-                .ToList();
-                InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
+                if (FacturaConSaldo)
+                {
+                    var invoices = dataService
+                        .Get<InvoiceHeader>(true)
+                        .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")) && s.OpenInvoice == true)
+                        .ToList();
+                    InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
+                }
+                else
+                {
+                    var invoices = dataService
+                     .Get<InvoiceHeader>(true)
+                     .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
+                     .ToList();
+                    InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
+                }
             }
 
 

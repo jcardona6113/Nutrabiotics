@@ -79,6 +79,7 @@
 
         public decimal Total { get; set; }
 
+
         public decimal TotalLineas
         {
 

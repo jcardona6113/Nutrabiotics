@@ -308,6 +308,7 @@
                     ShipToNum = NewOrder.ShipTo.ShipToNum,
                     CustomerId = NewOrder.Customer.CustomerId,
                     CustId = NewOrder.Customer.CustId,
+                    ContactId = 0,
                     CreditHold = NewOrder.Customer.CreditHold,
                     Date = DateTime.Now,
                     Platform = "Movil",
@@ -565,7 +566,7 @@
             Orders.RefreshOrders();
             await dialogService.ShowMessage(
                 "Confirmación",
-                "Órdenes sincronizadas Ok");
+                "Órdenes actualizadas Ok");
         }
 
         public ICommand SaveOrderCommand

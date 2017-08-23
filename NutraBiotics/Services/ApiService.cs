@@ -188,6 +188,7 @@
                         SalesCategory = order.SalesCategory,
                         ShipToId = order.ShipToId,
                         TermsCode = order.TermsCode,
+                        Platform = order.Platform,
                         IsSync = order.IsSync,
                         Total = order.Total,
                         SincronizadoEpicor = order.SincronizadoEpicor,

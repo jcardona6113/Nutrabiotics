@@ -40,7 +40,7 @@ namespace NutraBiotics.Models
         {
             get
             {
-                return UnitPrice * (decimal)OurShipQty;
+                return (UnitPrice + TaxAmt) * (decimal)OurShipQty;
             }
         }
 

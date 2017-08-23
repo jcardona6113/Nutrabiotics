@@ -45,11 +45,42 @@
 
         public DateTime? ClosedDate { get; set; }
 
-        public DateTime? DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         public int DiasVencimiento { get; set; }
 
         public bool OpenInvoice { get; set; }
+
+        public string ColorGrilla
+        {  
+        get
+            {
+                string color = string.Empty;
+
+                if (DiasVencimiento < -30)
+                {
+                    color = "Rojo";
+                }
+
+                if (DiasVencimiento >= -30 && DiasVencimiento <= 1)
+                {
+                    color = "Naranja";
+                }
+
+                if (DiasVencimiento  <= 7)
+                {
+                    color = "Amarillo";
+                }
+
+                if (DiasVencimiento > 7)
+                {
+                    color = "Verde";
+                }
+
+                return color;
+            }
+        }
+
 
         #endregion
 
@@ -95,6 +126,7 @@
                 {
                     details.Add(new InvoiceDetail
                     {
+                        
                         PartNum = ind.PartNum,
                         InvoiceNum = ind.InvoiceNum,
                         OurShipQty = ind.OurShipQty,

@@ -37,6 +37,7 @@ namespace NutraBiotics.ViewModels
             }
         }
 
+
         public decimal TotalLineas
         {
             set
@@ -64,6 +65,7 @@ namespace NutraBiotics.ViewModels
         public InvoiceDetailViewModel(ObservableCollection<InvoiceDetail> detalle)
         {
             this._invoiceDetails = detalle;
+
             TotalLineas = InvoiceDetails.Sum(god => god.Value);
         }
 

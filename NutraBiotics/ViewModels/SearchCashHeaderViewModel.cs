@@ -211,20 +211,27 @@
         }
 
 
-        //public ICommand SearchCommand
-        //{
-        //     get { return new RelayCommand(Search); }
-        //}
+        public ICommand SearchCommand
+        {
+            get { return new RelayCommand(Search); }
+        }
 
-        //void Search()
-        //{
-        //    CashHeaders = new ObservableCollection<Grouping<string, CashHeader>>(
-        //        cashHeader
-        //        .Where(c => c.Names.ToLower().Contains(Filter.ToLower()))
-        //        .OrderBy(c => c.Names)
-        //        .GroupBy(c => c.Names[0].ToString(), c => c)
-        //        .Select(g => new Grouping<string, CashHeader>(g.Key, g)));
-        //}
+       async void Search()
+        {
+            try
+            {
+                var pagos = dataService
+                .Get<CashHeader>(true)
+                .Where(s => s.CustId == Customer.CustId)
+                .ToList();
+                CashHeaders = new ObservableCollection<CashHeader>(pagos);
+            }
+            catch (Exception ex)
+            {
+
+                await dialogService.ShowMessage("Error", ex.Message);
+            }
+        }
 
         #endregion
 
