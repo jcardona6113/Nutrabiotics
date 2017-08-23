@@ -11,11 +11,9 @@
             <infra:InstanceLocator x:Key="Locator"/>
 
             <!-- Parameters -->
-            <!--    <x:String x:Key="URLAPI">http://190.85.172.107:27015</x:String> -->
+      <x:String x:Key="URLAPI">http://190.85.172.107:27015</x:String> 
+            
             <!--x:String x:Key="URLAPI">http://190.85.172.107:27015</> -->
-
-            <x:String x:Key="URLAPI">http://192.168.1.28:45116</x:String>
-
             <!-- <x:String x:Key="URLAPI">http://181.57.182.114:45116</x:String>-->
 
 

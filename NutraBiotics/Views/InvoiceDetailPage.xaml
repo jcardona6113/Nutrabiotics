@@ -16,19 +16,7 @@
 						ItemsSource="{Binding InvoiceDetails}"
 						HasUnevenRows="True">
 
-                <ListView.Footer>
-                    <ContentView 
-								Padding="0,5" 
-								BackgroundColor="{StaticResource AccentColor2}">
-                        <Label 
-									FontSize="Large"
-									FontAttributes="Bold"
-									TextColor="White"
-									Text="{Binding TotalLineas, StringFormat='Total: {0:C2}'}" 
-									HorizontalTextAlignment="End" 
-									VerticalTextAlignment="Center" />
-                    </ContentView>
-                </ListView.Footer>
+ 
 
                 <ListView.ItemTemplate>
                     <DataTemplate>

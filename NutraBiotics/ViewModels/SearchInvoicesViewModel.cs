@@ -24,6 +24,8 @@ namespace NutraBiotics.ViewModels
         Calendar _calendar;
         TimeSpan _diasvencido;
         bool _facturaconsaldo;
+        decimal _totallineas;
+
         #endregion
 
         #region Services
@@ -39,6 +41,24 @@ namespace NutraBiotics.ViewModels
         #endregion
 
         #region Properties
+
+        public decimal TotalLineas
+        {
+            set
+            {
+                if (_totallineas != value)
+                {
+                    _totallineas = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalLineas)));
+                }
+            }
+            get
+            {
+                return _totallineas;
+            }
+        }
+
+
 
         public bool IsRefreshing
         {
@@ -245,6 +265,10 @@ namespace NutraBiotics.ViewModels
                      .ToList();
                     InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
                 }
+
+
+                TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+
             }
 
 
