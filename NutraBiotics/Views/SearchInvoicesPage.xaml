@@ -33,6 +33,7 @@
                         Text="Cliente">
                 </Label>
                 <Entry
+                        FontSize="Small"
                         BackgroundColor="White"
                         Text="{Binding Customer.Names, Mode=TwoWay}"
                         IsEnabled="false"
@@ -57,13 +58,14 @@
                         Grid.Column="0"
                         WidthRequest="90"
                         TextColor="{StaticResource FontColor}"
-                        Text="Calendario">
+                        Text="Periodo">
                 </Label>
                 <Entry
                         BackgroundColor="White"
                         Text="{Binding Calendar.Description, Mode=TwoWay}"
                         IsEnabled="false"
-                        Placeholder="Seleccione un calendario..."
+                        FontSize="Small"
+                        Placeholder="Seleccione un periodo..."
                         Grid.Row="1"
                         Grid.Column="1">
                 </Entry>
@@ -80,9 +82,9 @@
                 <Label
                         Grid.Row="2"
                         Grid.Column="0"
-                     HorizontalOptions="End"
+                         HorizontalOptions="End"
                         WidthRequest="90"
-                     TextColor="{StaticResource FontColor}"
+                        TextColor="{StaticResource FontColor}"
                         Text="Facturas con saldo"
                         VerticalOptions="Center">
                 </Label>
@@ -90,7 +92,7 @@
                         Grid.Row="2"
                         Grid.Column="1"
                         VerticalOptions="Center"
-                        HorizontalOptions="End"
+                        HorizontalOptions="Start"
                         IsToggled="{Binding FacturaConSaldo, Mode=TwoWay}">
                 </Switch>
 
@@ -156,7 +158,7 @@
 									FontAttributes="Bold"
 									TextColor="White"
 									Text="{Binding TotalLineas, StringFormat='Total: {0:C2}'}" 
-									HorizontalTextAlignment="End" 
+									HorizontalTextAlignment="Start" 
 									VerticalTextAlignment="Center" />
                         </ContentView>
                     </ListView.Footer>
@@ -177,7 +179,7 @@
                                                         FontSize="Medium"
 														FontAttributes="Bold"        
 														TextColor="{StaticResource FontColor}"
-														Text="{Binding InvoiceNum, StringFormat='Numero Fact.: {0}'}">
+														Text="{Binding InvoiceNum, StringFormat='Numero Factura: {0}'}">
                                             <Label.Triggers>
                                                 <DataTrigger
                                                     TargetType="Label"
@@ -221,12 +223,12 @@
 
                                             <Label 
 														TextColor="{StaticResource FontColor}"
-														Text="{Binding InvoiceDate, StringFormat='Fecha Fact.: {0:yyyy/MM/dd}'}">
+														Text="{Binding InvoiceDate, StringFormat='Fecha Factura: {0:yyyy/MM/dd}'}">
                                           
                                         </Label>
                                         <Label 
 														TextColor="{StaticResource FontColor}"
-														Text="{Binding DueDate, StringFormat='Fecha vcto.: {0:yyyy/MM/dd}'}">
+														Text="{Binding DueDate, StringFormat='Fecha Vecimiento: {0:yyyy/MM/dd}'}">
                                        
 
                                         </Label>

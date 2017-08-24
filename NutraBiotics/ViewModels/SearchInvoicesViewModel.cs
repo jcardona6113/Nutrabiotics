@@ -255,6 +255,15 @@ namespace NutraBiotics.ViewModels
                         .Get<InvoiceHeader>(true)
                         .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")) && s.OpenInvoice == true)
                         .ToList();
+
+
+                    if (invoices == null || invoices.Count == 0)
+
+                    {
+                        await dialogService.ShowMessage("Informacion", "El cliente, no tiene facturas registradas.");
+                        return;
+                    }
+
                     InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
                 }
                 else
@@ -263,6 +272,14 @@ namespace NutraBiotics.ViewModels
                      .Get<InvoiceHeader>(true)
                      .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
                      .ToList();
+
+                    if (invoices == null && invoices.Count == 0)
+
+                    {
+                        await dialogService.ShowMessage("Informacion", "El cliente, no tiene facturas registradas.");
+                        return;
+                    }
+
                     InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
                 }
 

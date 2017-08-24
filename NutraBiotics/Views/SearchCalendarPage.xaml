@@ -37,7 +37,7 @@
                             FontAttributes="Bold"
                             FontSize="Large" 
                             TextColor="White"
-                            Text="Calendarios" 
+                            Text="Periodos" 
                             HorizontalTextAlignment="Center" 
                             VerticalTextAlignment="Center" />
                     </ContentView>
@@ -64,12 +64,12 @@
                                     <Label
                                 FontAttributes="Bold"   
                                 TextColor="{StaticResource FontColor}"
-                                        Text="{Binding StartDate, StringFormat='F. Inic.: {0:yyyy/MM/dd}'}">
+                                        Text="{Binding StartDate, StringFormat='F. Inicial.: {0:yyyy/MM/dd}'}">
                                     </Label>
                                     <Label
                                 FontAttributes="Bold"   
                                 TextColor="{StaticResource FontColor}"
-                                Text="{Binding EndDate, StringFormat='F. Fin: {0:yyyy/MM/dd}'}">
+                                Text="{Binding EndDate, StringFormat='F. Final: {0:yyyy/MM/dd}'}">
                                     </Label>
                                 </StackLayout>
                                 <Image 

@@ -25,6 +25,7 @@
         DialogService dialogService;
         NavigationService navigationService;
         Customer _customer;
+        decimal _totallineas;
 
         #endregion
 
@@ -96,6 +97,24 @@
             }
         }
 
+
+        public decimal TotalLineas
+        {
+            set
+            {
+                if (_totallineas != value)
+                {
+                    _totallineas = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalLineas)));
+                }
+            }
+            get
+            {
+                return _totallineas;
+            }
+        }
+
+
         //public string Filter
         //{
         //    set
@@ -139,14 +158,12 @@
 
         #region Constructor
 
-        public SearchCashHeaderViewModel(List<CashHeader> cashheaderlist)
+        public SearchCashHeaderViewModel()
         {
             instance = this;
-            this.cashHeader = cashheaderlist;
             dataService = new DataService();
             dialogService = new DialogService();
             navigationService = new NavigationService();
-
             CashHeaders = new ObservableCollection<CashHeader>();
             // CargarPagos();
         } 
@@ -224,7 +241,16 @@
                 .Get<CashHeader>(true)
                 .Where(s => s.CustId == Customer.CustId)
                 .ToList();
+
+                if (pagos == null || pagos.Count == 0)
+
+                {
+                    await dialogService.ShowMessage("Informacion", "El cliente, no tiene pagos registrados.");
+                    return;
+                }
+
                 CashHeaders = new ObservableCollection<CashHeader>(pagos);
+                TotalLineas = CashHeaders.Sum(god => god.TranAmt);
             }
             catch (Exception ex)
             {

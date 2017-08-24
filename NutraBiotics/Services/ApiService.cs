@@ -162,7 +162,7 @@
                             PartId = detail.PartId,
                             PriceListPartId = detail.PriceListPartId,
                             PartNum = detail.PartNum,
-                            Reference = string.Empty,
+                            Reference = detail.Reference,
                             TaxAmt = detail.TaxAmt,
                             UnitPrice = detail.UnitPrice,
                             Total = detail.Total,
