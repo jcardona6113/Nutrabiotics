@@ -8,7 +8,7 @@ using NutraBiotics.Services;
 
 namespace NutraBiotics.Models
 {
-   public class Calendar
+    public class Calendar
     {
         #region Properties
 
@@ -48,24 +48,48 @@ namespace NutraBiotics.Models
         {
             get { return new GalaSoft.MvvmLight.Command.RelayCommand(SelectRecord); }
         }
+
         async void SelectRecord()
         {
             var mainviewmodel = ViewModels.MainViewModel.GetInstance();
-            try
+
+            switch (mainviewmodel.EjecutadoDesde)
             {
-                var searchinvoice = ViewModels.SearchInvoicesViewModel.GetInstance();
-                searchinvoice.Calendar = this;
-                await navigationService.Back();
+                case "SearchInvoicesViewModel":
+                    try
+                    {
+                        var searchinvoice = ViewModels.SearchInvoicesViewModel.GetInstance();
+                        searchinvoice.Calendar = this;
+                        await navigationService.Back();
+                    }
+
+                    catch (System.Exception ex)
+                    {
+                        await dialogService.ShowMessage("Error", ex.Message);
+                    }
+
+                    break;
+
+                case "SearchCashHeaderPage":
+
+                    try
+                    {
+                        var searchcashheader = ViewModels.SearchCashHeaderViewModel.GetInstance();
+                        searchcashheader.Calendar = this;
+                        await navigationService.Back();
+                    }
+
+                    catch (System.Exception ex)
+                    {
+                        await dialogService.ShowMessage("Error", ex.Message);
+                    }
+
+                    break;
             }
 
-            catch (System.Exception ex)
-            {
-                await dialogService.ShowMessage("Error", ex.Message);
-            }
+            #endregion
         }
 
-        #endregion
     }
-
 }
 

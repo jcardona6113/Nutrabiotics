@@ -11,11 +11,14 @@
             <infra:InstanceLocator x:Key="Locator"/>
 
             <!-- Parameters -->
-      <x:String x:Key="URLAPI">http://190.85.172.107:27015</x:String> 
-            
-            <!--x:String x:Key="URLAPI">http://190.85.172.107:27015</> -->
-            <!-- <x:String x:Key="URLAPI">http://181.57.182.114:45116</x:String>-->
 
+
+            <!-- Nutra -->
+            <x:String x:Key="URLAPI">http://190.85.172.107:27015</x:String> 
+            
+
+            <!-- Talsa
+            <x:String x:Key="URLAPI">http://181.57.182.114:45116</x:String>-->
 
             <!-- Colors -->
             <Color x:Key="MainColor">#1A1626</Color>

@@ -223,6 +223,7 @@ namespace NutraBiotics.ViewModels
 
 
                 var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.EjecutadoDesde = "SearchInvoicesViewModel";
                 mainViewModel.SearchCalendar = new SearchCalendarViewModel(calendars);
                 await navigationService.Navigate("SearchCalendarPage");
             }
@@ -273,10 +274,10 @@ namespace NutraBiotics.ViewModels
                      .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
                      .ToList();
 
-                    if (invoices == null && invoices.Count == 0)
+                    if (invoices == null || invoices.Count == 0)
 
                     {
-                        await dialogService.ShowMessage("Informacion", "El cliente, no tiene facturas registradas.");
+                        await dialogService.ShowMessage("Informacion", "El cliente, no tiene facturas registradas en el periodo seleccionado.");
                         return;
                     }
 

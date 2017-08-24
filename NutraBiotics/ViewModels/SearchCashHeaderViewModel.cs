@@ -26,6 +26,7 @@
         NavigationService navigationService;
         Customer _customer;
         decimal _totallineas;
+        Calendar _calendar;
 
         #endregion
 
@@ -94,6 +95,24 @@
             get
             {
                 return _isRefreshing;
+            }
+        }
+
+        public Calendar Calendar
+        {
+            set
+            {
+                if (_calendar != value)
+                {
+                    _calendar = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(Calendar)));
+                }
+            }
+            get
+            {
+                return _calendar;
             }
         }
 
@@ -204,12 +223,12 @@
         #region Commands
 
 
-        public ICommand SearchCustomerInvoiceCommand
+        public ICommand SearchCustomerCommand
         {
-            get { return new RelayCommand(SearchCustomerInvoice); }
+            get { return new RelayCommand(SearchCustomer); }
         }
 
-        async void SearchCustomerInvoice()
+        async void SearchCustomer()
         {
             var customers = dataService.Get<Customer>(false);
 
@@ -227,6 +246,37 @@
             await navigationService.Navigate("SearchCustomerPage");
         }
 
+        public ICommand SearchCalendarCommand
+        {
+            get { return new RelayCommand(SearchCalendar); }
+        }
+
+        async void SearchCalendar()
+        {
+            try
+            {
+                var calendars = dataService.Get<Calendar>(false);
+
+                if (calendars == null || calendars.Count == 0)
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "Debes descargar los calendarios.");
+                    return;
+                }
+
+
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.EjecutadoDesde = "SearchCashHeaderPage";
+                mainViewModel.SearchCalendar = new SearchCalendarViewModel(calendars);
+                await navigationService.Navigate("SearchCalendarPage");
+            }
+            catch (Exception ex)
+            {
+                await dialogService.ShowMessage("Error", ex.Message);
+            }
+        }
+
 
         public ICommand SearchCommand
         {
@@ -237,29 +287,39 @@
         {
             try
             {
-                var pagos = dataService
-                .Get<CashHeader>(true)
-                .Where(s => s.CustId == Customer.CustId)
-                .ToList();
-
-                if (pagos == null || pagos.Count == 0)
-
+                if (Customer == null || Calendar == null)
                 {
-                    await dialogService.ShowMessage("Informacion", "El cliente, no tiene pagos registrados.");
+                    await dialogService.ShowMessage("Validacion",
+                        "Debes seleccionar un cliente y un periodo antes de ejecutar la busqueda.");
                     return;
                 }
 
-                CashHeaders = new ObservableCollection<CashHeader>(pagos);
-                TotalLineas = CashHeaders.Sum(god => god.TranAmt);
+             
+                    var pagos = dataService
+                        .Get<CashHeader>(true)
+                        .Where(s => s.CustId == Customer.CustId && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
+                        .ToList();
+
+
+                    if (pagos == null || pagos.Count == 0)
+
+                    {
+                        await dialogService.ShowMessage("Informacion", "El cliente, no tiene pagos registrados en el periodo seleccionado.");
+                        return;
+                    }
+
+                    CashHeaders = new ObservableCollection<CashHeader>(pagos);
+
+                    TotalLineas = CashHeaders.Sum(god => god.TranAmt);
             }
+
             catch (Exception ex)
             {
-
                 await dialogService.ShowMessage("Error", ex.Message);
             }
         }
 
+        
         #endregion
-
     }
 }

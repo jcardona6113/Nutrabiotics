@@ -453,28 +453,14 @@
             NeedBy = OrderToEdit.NeedByDate;
             Observations = OrderToEdit.Observations;
 
+
             //Cargo cliente
-            var editcustomer = dataService
-                .Get<Customer>(false)
-                .Where(s => s.CustomerId == OrderToEdit.CustomerId)
-                .FirstOrDefault();
-            this.Customer = editcustomer;
+            Customer = OrderToEdit.Customer;
 
 
             //Cargo shipto
-            var editshipto = dataService
-                .Get<ShipTo>(false)
-                .Where(s => s.ShipToId == OrderToEdit.ShipToId)
-                .FirstOrDefault();
-            this.ShipTo = editshipto;
-
-
-            //Cargo contact
-            var editcontact = dataService
-            .Get<Contact>(false)
-            .Where(s => s.ContactId == OrderToEdit.ContactId)
-            .FirstOrDefault();
-            this.Contact = editcontact;
+            this.ShipTo = dataService
+                    .Find<ShipTo>(OrderToEdit.ShipToId, false);
 
 
             //Cargo detalle
@@ -517,27 +503,12 @@
             Observations = OrderToDelete.Observations;
 
             //Cargo cliente
-            var editcustomer = dataService
-                .Get<Customer>(false)
-                .Where(s => s.CustomerId == OrderToDelete.CustomerId)
-                .FirstOrDefault();
-            this.Customer = editcustomer;
+            Customer = OrderToDelete.Customer;
 
 
             //Cargo shipto
-            var editshipto = dataService
-                .Get<ShipTo>(false)
-                .Where(s => s.ShipToId == OrderToDelete.ShipToId)
-                .FirstOrDefault();
-            this.ShipTo = editshipto;
-
-
-            //Cargo contact
-            var editcontact = dataService
-            .Get<Contact>(false)
-            .Where(s => s.ContactId == OrderToDelete.ContactId)
-            .FirstOrDefault();
-            this.Contact = editcontact;
+            this.ShipTo = dataService
+                    .Find<ShipTo>(OrderToDelete.ShipToId, false);
 
 
             //Cargo detalle
@@ -618,6 +589,7 @@
             GridOrderDetails.Add(backupdetail);
             PartNum = null;
             PriceListPart = null;
+            Reference = null;
             Quantity = 1;
             TotalLineas = GridOrderDetails.Sum(god => god.Value);
 
@@ -658,6 +630,8 @@
                     "Debe ingresar una cantidad mayor a cero.");
                 return;
             }
+
+            if(Reference == null) { Reference = "0"; }
 
             GridOrderDetails.Add(new GridOrderDetail
             {
