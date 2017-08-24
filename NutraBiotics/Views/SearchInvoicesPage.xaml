@@ -30,6 +30,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -108,7 +109,7 @@
                         HorizontalOptions="Start"
                         IsToggled="{Binding FacturaConSaldo, Mode=TwoWay}">
                 </Switch>
-                
+
                 <Label
                         Grid.Row="3"
                         Grid.Column="0"
@@ -118,7 +119,7 @@
                         Text="Filtrar x fechas"
                         VerticalOptions="Center">
                 </Label>
-                
+
                 <Switch
                         IsEnabled="{Binding IsEnabled}"
                         Grid.Row="3"
@@ -139,38 +140,38 @@
                     <StackLayout
 					Orientation="Horizontal">
 
-                    <Label
+                        <Label
                         VerticalOptions="Center"
 						Text="Fecha Inicial:"
                         WidthRequest="90"
 						HorizontalOptions="Start">
-                    </Label>
+                        </Label>
 
-                    <DatePicker
+                        <DatePicker
                         VerticalOptions="Center"
 						WidthRequest="200"
 						BackgroundColor="White"
 						Date="{Binding FechaInicial}">
-                    </DatePicker>
+                        </DatePicker>
                     </StackLayout>
 
                     <StackLayout
 					Orientation="Horizontal">
 
-                    <Label
+                        <Label
                         WidthRequest="90"
                         VerticalOptions="Center"
 						Text="Fecha Final:"
 						HorizontalOptions="Start">
-                    </Label>
+                        </Label>
 
-                    <DatePicker
+                        <DatePicker
                         VerticalOptions="Center"
 						WidthRequest="200"
 						BackgroundColor="White"
 						Date="{Binding FechaFinal}">
-                    </DatePicker>
-                        
+                        </DatePicker>
+
                     </StackLayout>
                 </StackLayout>
 
@@ -188,16 +189,7 @@
                 </Button>
 
             </Grid>
-            <Button
-                WidthRequest="200"
-                Command="{Binding SearchCommand}"
-                HorizontalOptions="FillAndExpand"
-                TextColor="White"
-                FontAttributes="Bold"
-                BackgroundColor="{StaticResource AccentColor2}"
-                Text="Buscar">
-            </Button>
-            
+
             <StackLayout>
                     <ListView
 								BackgroundColor="{StaticResource AccentColor1}"
