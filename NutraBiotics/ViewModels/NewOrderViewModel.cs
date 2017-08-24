@@ -460,7 +460,7 @@
 
             //Cargo shipto
             this.ShipTo = dataService
-                    .Find<ShipTo>(OrderToEdit.ShipToId, false);
+                .Find<ShipTo>(OrderToEdit.ShipToId, false);
 
 
             //Cargo detalle
@@ -528,6 +528,7 @@
                     Reference = item.Reference,
                 });
             }
+
             //Calculo total
             TotalLineas = GridOrderDetails.Sum(god => god.Value);
         }
