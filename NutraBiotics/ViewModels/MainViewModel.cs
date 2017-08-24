@@ -727,6 +727,14 @@
                     return;
                 }
 
+                if (string.IsNullOrEmpty(NewShipTo.Country))
+                {
+                    await dialogService.ShowMessage(
+                    "Error",
+                    "Debes seleccionar un pais.");
+                    return;
+                }
+
                 //var UltimoRegistro = dataService
                 //.Get<ShipTo>(false)
                 //.OrderByDescending(t => t.ShipToId)
@@ -993,6 +1001,14 @@
                     return;
                 }
 
+                if (string.IsNullOrEmpty(EditShipTo.ShipTo.Country))
+                {
+                    await dialogService.ShowMessage(
+                    "Error",
+                    "Debes seleccionar un pais.");
+                    return;
+                }
+
                 var main = MainViewModel.GetInstance();
 
                 var ShipToToUpdate= new SyncShiptoRequest
@@ -1008,7 +1024,7 @@
                     ShipToId = main.EditShipTo.ShipTo.ShipToId,
                     ShipToName = main.EditShipTo.ShipTo.ShipToName,
                     ShipToNum = main.EditShipTo.ShipTo.ShipToNum,
-                    SincronizadoEpicor = main.EditShipTo.ShipTo.SincronizadoEpicor,
+                    SincronizadoEpicor = false,
                     State = main.EditShipTo.ShipTo.State,
                     TerritoryEpicorID = main.EditShipTo.ShipTo.TerritoryEpicorID,
                     VendorId = User.VendorId,
