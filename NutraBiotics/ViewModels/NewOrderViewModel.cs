@@ -590,7 +590,7 @@
             GridOrderDetails.Add(backupdetail);
             PartNum = null;
             PriceListPart = null;
-            Reference = null;
+            Reference= "0";
             Quantity = 1;
             TotalLineas = GridOrderDetails.Sum(god => god.Value);
 
@@ -601,7 +601,7 @@
             GridOrderDetails.Add(edited);
             PartNum = null;
             PriceListPart = null;
-            Reference = null;
+            Reference= "0";
             Quantity = 1;
             TotalLineas = GridOrderDetails.Sum(god => god.Value);
         }
@@ -632,7 +632,7 @@
                 return;
             }
 
-            if(Reference == null) { Reference = "0"; }
+            if(Reference == string.Empty || Reference == null) { Reference = "0"; }
 
             GridOrderDetails.Add(new GridOrderDetail
             {
@@ -648,7 +648,7 @@
             PartNum = null;
             PriceListPart = null;
             Quantity = 1;
-            Reference = null;
+            Reference= "0";
 
             TotalLineas = GridOrderDetails.Sum(god => god.Value);
         }

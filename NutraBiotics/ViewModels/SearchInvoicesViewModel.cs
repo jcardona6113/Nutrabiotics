@@ -25,6 +25,7 @@ namespace NutraBiotics.ViewModels
         TimeSpan _diasvencido;
         bool _facturaconsaldo;
         decimal _totallineas;
+        decimal _totalSaldo;
 
         #endregion
 
@@ -57,6 +58,23 @@ namespace NutraBiotics.ViewModels
                 return _totallineas;
             }
         }
+
+        public decimal TotalSaldo
+        {
+            set
+            {
+                if (_totalSaldo != value)
+                {
+                    _totalSaldo = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalSaldo)));
+                }
+            }
+            get
+            {
+                return _totalSaldo;
+            }
+        }
+
 
 
 
@@ -286,6 +304,8 @@ namespace NutraBiotics.ViewModels
 
 
                 TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+
+                TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
 
             }
 

@@ -287,7 +287,7 @@
             NewOrder.Customer = null;
             NewOrder.ShipTo = null;
             NewOrder.PriceListId = 0;
-            NewOrder.Reference = null;
+            NewOrder.Reference= "0";
             NewOrder.Observations = null;
             NewOrder.NeedBy = DateTime.Today;
             NewOrder.TotalLineas = 0;
