@@ -7,14 +7,27 @@
     Title="Buscar Facturas"
     BackgroundColor="{StaticResource AccentColor1}"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+
+    <ContentPage.Padding>
+        <OnPlatform 
+            x:TypeArguments="Thickness" 
+            iOS="10,20,10,10" 
+            Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
+
     <ContentPage.Content>
+        
         <StackLayout
-                BindingContext="{Binding SearchInvoices}"
-                Padding="5">
+                BindingContext="{Binding SearchInvoices}">
 
             <Grid
                 RowSpacing="3">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
@@ -95,6 +108,84 @@
                         HorizontalOptions="Start"
                         IsToggled="{Binding FacturaConSaldo, Mode=TwoWay}">
                 </Switch>
+                
+                <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                         HorizontalOptions="End"
+                        WidthRequest="90"
+                        TextColor="{StaticResource FontColor}"
+                        Text="Filtrar x fechas"
+                        VerticalOptions="Center">
+                </Label>
+                
+                <Switch
+                        IsEnabled="{Binding IsEnabled}"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        IsToggled="{Binding FiltroFechas, Mode=TwoWay}">
+                </Switch>
+
+
+
+                <StackLayout
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding FiltroFechas, Mode=TwoWay}">
+                    <StackLayout
+					Orientation="Horizontal">
+
+                    <Label
+                        VerticalOptions="Center"
+						Text="Fecha Inicial:"
+                        WidthRequest="90"
+						HorizontalOptions="Start">
+                    </Label>
+
+                    <DatePicker
+                        VerticalOptions="Center"
+						WidthRequest="200"
+						BackgroundColor="White"
+						Date="{Binding FechaInicial}">
+                    </DatePicker>
+                    </StackLayout>
+
+                    <StackLayout
+					Orientation="Horizontal">
+
+                    <Label
+                        WidthRequest="90"
+                        VerticalOptions="Center"
+						Text="Fecha Final:"
+						HorizontalOptions="Start">
+                    </Label>
+
+                    <DatePicker
+                        VerticalOptions="Center"
+						WidthRequest="200"
+						BackgroundColor="White"
+						Date="{Binding FechaFinal}">
+                    </DatePicker>
+                        
+                    </StackLayout>
+                </StackLayout>
+
+                <Button
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                WidthRequest="200"
+                Command="{Binding SearchCommand}"
+                HorizontalOptions="FillAndExpand"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentColor2}"
+                Text="Buscar">
+                </Button>
 
             </Grid>
             <Button

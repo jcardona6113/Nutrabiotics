@@ -301,6 +301,7 @@
         {
             try
             {
+
                 var orderHeader = new OrderHeader
                 {
                     UserId = User.UserId,
@@ -324,6 +325,8 @@
                     NeedByDate = NewOrder.NeedBy,
                     RowMod = NewOrder.RowMod,
                 };
+
+                if (orderHeader.Observations == null) {orderHeader.Observations = String.Empty;}
 
                 dataService.Insert(orderHeader);
                 int i = 0;
@@ -753,6 +756,7 @@
                 {
                     ShipToId = 0,
                     CustomerId = NewShipTo.CustomerId,
+                    CustNum = EditCustomer.Customer.CustNum,
                     ShipToNum = NewShipTo.ShipToNum,
                     Company = User.Company,
                     ShipToName = NewShipTo.ShipToName,
