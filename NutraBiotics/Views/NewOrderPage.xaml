@@ -31,7 +31,7 @@
                         <ColumnDefinition Width="2.2*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-
+                    
                     <Label
                         VerticalOptions="Center"
                         HorizontalOptions="End"
@@ -45,7 +45,7 @@
                         BackgroundColor="White"
                         Text="{Binding Customer.Names, Mode=TwoWay}"
                         IsEnabled="false"
-                        
+                        FontSize="Small"
                         Placeholder="Seleccione un cliente..."
                         Grid.Row="0"
                         Grid.Column="1">
@@ -73,7 +73,7 @@
                         BackgroundColor="White"
                         Text="{Binding ShipTo.ShipToName, Mode=TwoWay}"
                         IsEnabled="false"
-                        
+                        FontSize="Small"
                         Placeholder="Seleccione una sucursal..."
                         Grid.Row="1"
                         Grid.Column="1">
@@ -113,7 +113,7 @@
                         HorizontalOptions="End"
                         WidthRequest="90"
                         TextColor="{StaticResource FontColor}"
-                        Text="Terminos:">
+                        Text="Terminos">
                     </Label>
 
                     <Label 
@@ -176,6 +176,7 @@
                         Text="Producto">
                     </Label>
                     <Entry
+                        FontSize="Small"
                         BackgroundColor="White"
                         Completed="OnPartComplete"
                         Text="{Binding PartNum, Mode=TwoWay}"

@@ -60,6 +60,8 @@ namespace NutraBiotics.Models
                     {
                         var searchinvoice = ViewModels.SearchInvoicesViewModel.GetInstance();
                         searchinvoice.Calendar = this;
+                        searchinvoice.FiltroFechas = false;
+                        searchinvoice.IsEnabled = false;
                         await navigationService.Back();
                     }
 
@@ -76,6 +78,8 @@ namespace NutraBiotics.Models
                     {
                         var searchcashheader = ViewModels.SearchCashHeaderViewModel.GetInstance();
                         searchcashheader.Calendar = this;
+                        searchcashheader.FiltroFechas = false;
+                        searchcashheader.IsEnabled = false;
                         await navigationService.Back();
                     }
 

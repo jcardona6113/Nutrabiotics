@@ -1,153 +1,220 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NutraBiotics.Views.SearchCashHeaderPage"
-             Icon="ic_payment.png"
-            Title="Buscar Pagos"
-            BackgroundColor="{StaticResource BackgroundColor}"
-            BindingContext="{Binding Main, Source={StaticResource Locator}}"> 
-    
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		x:Class="NutraBiotics.Views.SearchCashHeaderPage"
+		Icon="ic_payment.png"
+		Title="Buscar Pagos"
+		BackgroundColor="{StaticResource BackgroundColor}"
+		BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
     <ContentPage.Content>
+
         <StackLayout
-             Padding="10,10, 5, 5"
-                BackgroundColor="{StaticResource AccentColor1}"
-                BindingContext="{Binding SearchCashHeader}">
+				BackgroundColor="{StaticResource AccentColor1}"
+				BindingContext="{Binding SearchCashHeader}">
+            <ScrollView>
+                <StackLayout
+                    HeightRequest="320">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-            <Grid
-                RowSpacing="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="2.2*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Label
-                        VerticalOptions="Center"
-                        HorizontalOptions="End"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        WidthRequest="90"
-                        TextColor="{StaticResource FontColor}"
-                        Text="Cliente">
-                </Label>
-                <Entry
-                        FontSize="Small"
-                        BackgroundColor="White"
-                        Text="{Binding Customer.Names, Mode=TwoWay}"
-                        IsEnabled="false"
-                        Placeholder="Seleccione un cliente..."
-                        Grid.Row="0"
-                        Grid.Column="1">
-                </Entry>
-                <Image
-                        VerticalOptions="Center"
-                        Source="ic_search.png"
-                        Grid.Row="0"
-                        Grid.Column="2">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchCustomerCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image
+						VerticalOptions="Center"
+						Source="ic_personWTE.png"
+						Grid.Row="0"
+						Grid.Column="0">
+                        </Image>
+                        <Entry
+						FontSize="Small"
+						BackgroundColor="White"
+						Text="{Binding Customer.Names, Mode=TwoWay}"
+						IsEnabled="false"
+						Placeholder="Seleccione un cliente..."
+						Grid.Row="0"
+						Grid.Column="1"
+						Grid.ColumnSpan="2">
+                        </Entry>
+                        <Image
+						VerticalOptions="Center"
+						Source="ic_search.png"
+						Grid.Row="0"
+						Grid.Column="3">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SearchCustomerCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
 
-                <Label
-                        VerticalOptions="Center"
-                        HorizontalOptions="End"
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        WidthRequest="90"
-                        TextColor="{StaticResource FontColor}"
-                        Text="Periodo">
-                </Label>
-                <Entry
-                        BackgroundColor="White"
-                        Text="{Binding Calendar.Description, Mode=TwoWay}"
-                        IsEnabled="false"
-                        FontSize="Small"
-                        Placeholder="Seleccione un periodo..."
-                        Grid.Row="1"
-                        Grid.Column="1">
-                </Entry>
-                <Image
-                        VerticalOptions="Center"
-                        Source="ic_search.png"
-                        Grid.Row="1"
-                        Grid.Column="2">
+                        <Image
+						Source="ic_date_range.png"
+						VerticalOptions="Center"
+						Grid.Row="1"
+						Grid.Column="0">
+                        </Image>
+                        <Entry
 
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SearchCalendarCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+						BackgroundColor="White"
+						Text="{Binding Calendar.Description, Mode=TwoWay}"
+						IsEnabled="false"
+						FontSize="Small"
+						Placeholder="Seleccione un periodo..."
+						Grid.Row="1"
+						Grid.Column="1"
+						Grid.ColumnSpan="2">
+                        </Entry>
+                        <Image
+						VerticalOptions="Center"
+						Source="ic_search.png"
+						Grid.Row="1"
+						Grid.Column="3">
 
-            </Grid>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SearchCalendarCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <Label
+						Grid.Row="2"
+						Grid.Column="1"
+						TextColor="{StaticResource FontColor}"
+						Text="F.Fechas"
+						HorizontalOptions="Start"
+						VerticalOptions="Center">
+                        </Label>
+
+                        <Switch
+						IsEnabled="{Binding IsEnabled}"
+						Grid.Row="2"
+						Grid.Column="1"
+						VerticalOptions="Center"
+						HorizontalOptions="End"
+						IsToggled="{Binding FiltroFechas, Mode=TwoWay}">
+                        </Switch>
+
+                        <Label
+						Grid.Row="3"
+						Grid.Column="0"
+						VerticalOptions="Center"
+						Text="F.Inicial"
+						HorizontalOptions="Start"
+						TextColor="{StaticResource FontColor}">
+                        </Label>
+
+                        <DatePicker
+						IsEnabled="{Binding FiltroFechas, Mode=TwoWay}"
+						Grid.Row="3"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"
+						VerticalOptions="Center"
+						BackgroundColor="White"
+						Date="{Binding FechaInicial}">
+                        </DatePicker>
+
+                        <Label
+						Grid.Row="4"
+						Grid.Column="0"
+						VerticalOptions="Center"
+						TextColor="{StaticResource FontColor}"
+						Text="F.Final:"
+						HorizontalOptions="Start">
+                        </Label>
+
+                        <DatePicker
+						IsEnabled="{Binding FiltroFechas, Mode=TwoWay}"
+						Grid.Row="4"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"
+						VerticalOptions="Center"
+						BackgroundColor="White"
+						Date="{Binding FechaFinal}">
+                        </DatePicker>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+
             <Button
-                WidthRequest="200"
-                Command="{Binding SearchCommand}"
-                HorizontalOptions="FillAndExpand"
-                TextColor="White"
-                FontAttributes="Bold"
-                BackgroundColor="{StaticResource AccentColor2}"
-                Text="Buscar">
-            </Button>
+					WidthRequest="200"
+					Command="{Binding SearchCommand}"
+					HorizontalOptions="FillAndExpand"
+					TextColor="White"
+					FontAttributes="Bold"
+					BackgroundColor="{StaticResource AccentColor2}"
+					Text="Buscar"/>
 
             <ListView
-               	BackgroundColor="{StaticResource AccentColor1}"
-								SeparatorVisibility="Default"
-								ItemsSource="{Binding CashHeaders}"
-								HasUnevenRows="True">
+					BackgroundColor="{StaticResource AccentColor1}"
+					SeparatorVisibility="Default"
+					ItemsSource="{Binding CashHeaders}"
+					HasUnevenRows="True">
 
                 <ListView.Header>
                     <ContentView 
-                        Padding="0,5" 
-                        BackgroundColor="{StaticResource AccentColor2}">
+							Padding="0,5" 
+							BackgroundColor="{StaticResource AccentColor2}">
 
                         <ContentView.Triggers>
                             <DataTrigger
-										    TargetType="ContentView"
-										    Binding="{Binding CashHeaders.Count}"
-										    Value="0">
+									TargetType="ContentView"
+									Binding="{Binding CashHeaders.Count}"
+									Value="0">
                                 <Setter
-											Property="IsVisible"
-											Value="False">
+										Property="IsVisible"
+										Value="False">
                                 </Setter>
                             </DataTrigger>
                         </ContentView.Triggers>
 
                         <Label 
-                            FontAttributes="Bold"
-                            FontSize="Large" 
-                            TextColor="White"
-                            Text="Pagos" 
-                            HorizontalTextAlignment="Center" 
-                            VerticalTextAlignment="Center" />
+								FontAttributes="Bold"
+								FontSize="Large" 
+								TextColor="White"
+								Text="Pagos" 
+								HorizontalTextAlignment="Center" 
+								VerticalTextAlignment="Center" />
                     </ContentView>
                 </ListView.Header>
 
 
                 <ListView.Footer>
                     <ContentView 
-								Padding="0,5" 
-								BackgroundColor="{StaticResource AccentColor2}">
+							Padding="0,5" 
+							BackgroundColor="{StaticResource AccentColor2}">
                         <ContentView.Triggers>
                             <DataTrigger
-										    TargetType="ContentView"
-										    Binding="{Binding CashHeaders.Count}"
-										    Value="0">
+									TargetType="ContentView"
+									Binding="{Binding CashHeaders.Count}"
+									Value="0">
                                 <Setter
-											Property="IsVisible"
-											Value="False">
+										Property="IsVisible"
+										Value="False">
                                 </Setter>
                             </DataTrigger>
                         </ContentView.Triggers>
                         <Label 
-									FontSize="Large"
-									FontAttributes="Bold"
-									TextColor="White"
-									Text="{Binding TotalLineas, StringFormat='Total: {0:C2}'}" 
-									HorizontalTextAlignment="Start" 
-									VerticalTextAlignment="Center" />
+								FontSize="Large"
+								FontAttributes="Bold"
+								TextColor="White"
+								Text="{Binding TotalLineas, StringFormat='Total: {0:C2}'}" 
+								HorizontalTextAlignment="Start" 
+								VerticalTextAlignment="Center" />
                     </ContentView>
                 </ListView.Footer>
 
@@ -161,21 +228,22 @@
                                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <StackLayout 
-                            Grid.Column="0">
+										Grid.Column="0">
                                     <Label
-                                TextColor="{StaticResource FontColor}"
-                                Text="{Binding InvoiceNum, StringFormat='Numero factura: {0} '}">
+											FontAttributes="Bold"
+											TextColor="{StaticResource FontColor}"
+											Text="{Binding InvoiceNum, StringFormat='Numero factura: {0} '}">
                                     </Label>
 
                                     <Label 
-										TextColor="{StaticResource FontColor}"
-										Text="{Binding TranDate, StringFormat='Fecha pago: {0:yyyy/MM/dd}'}">
+											TextColor="{StaticResource FontColor}"
+											Text="{Binding TranDate, StringFormat='Fecha pago: {0:yyyy/MM/dd}'}">
                                     </Label>
 
                                     <Label 
-                                         FontAttributes="Bold"
-                                        TextColor="{StaticResource FontColor}"
-                                        Text="{Binding TranAmt, StringFormat='Valor pago: {0:C2}'}">
+											FontAttributes="Bold"
+											TextColor="{StaticResource FontColor}"
+											Text="{Binding TranAmt, StringFormat='Valor pago: {0:C2}'}">
                                     </Label>
 
                                 </StackLayout>

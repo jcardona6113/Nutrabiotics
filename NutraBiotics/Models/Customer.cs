@@ -94,6 +94,7 @@
                         var searchinvoice = SearchInvoicesViewModel.GetInstance();
                         searchinvoice.Calendar = null;
                         searchinvoice.Customer = this;
+                        searchinvoice.IsEnabled = true;
                         await navigationService.Back();
                     }
                     catch (System.Exception ex)
@@ -132,7 +133,9 @@
                     {
 
                         var searchvashheaderviewmodel = SearchCashHeaderViewModel.GetInstance();
+                        searchvashheaderviewmodel.Calendar = null;
                         searchvashheaderviewmodel.Customer = this;
+                        searchvashheaderviewmodel.IsEnabled = true;
                         await navigationService.Back();
                     }
 
