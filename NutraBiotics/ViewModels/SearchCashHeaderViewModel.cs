@@ -79,8 +79,7 @@
                 return _fechaFinal;
             }
         }
-
-
+    
         public bool IsEnabled
         {
             set
@@ -96,7 +95,6 @@
                 return isEnabled;
             }
         }
-
 
         public bool FiltroFechas
         {
@@ -364,6 +362,13 @@
             try
             {
                 CashHeaders = null;
+
+                if (Calendar == null && FiltroFechas == false)
+                {
+                    await dialogService.ShowMessage("Validacion",
+                          "Debes seleccionar un filtro antes de ejecutar la busqueda.");
+                    return;
+                }
 
                 if (Calendar != null && FiltroFechas == false)
                 {

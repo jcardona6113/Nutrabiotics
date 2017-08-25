@@ -61,7 +61,7 @@ namespace NutraBiotics.Models
                         var searchinvoice = ViewModels.SearchInvoicesViewModel.GetInstance();
                         searchinvoice.Calendar = this;
                         searchinvoice.FiltroFechas = false;
-                        searchinvoice.IsEnabled = false;
+                        searchinvoice.FiltroFechasIsEnabled = false;
                         await navigationService.Back();
                     }
 

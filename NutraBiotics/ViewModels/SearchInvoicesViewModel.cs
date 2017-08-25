@@ -30,6 +30,7 @@ namespace NutraBiotics.ViewModels
         bool isEnabled;
         DateTime _fechaInicial;
         DateTime _fechaFinal;
+        bool _filtroFechasIsEnabled;
 
 
         #endregion
@@ -125,6 +126,22 @@ namespace NutraBiotics.ViewModels
             get
             {
                 return isEnabled;
+            }
+        }
+
+        public bool FiltroFechasIsEnabled
+        {
+            set
+            {
+                if (_filtroFechasIsEnabled != value)
+                {
+                    _filtroFechasIsEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FiltroFechasIsEnabled)));
+                }
+            }
+            get
+            {
+                return _filtroFechasIsEnabled;
             }
         }
 
@@ -245,6 +262,7 @@ namespace NutraBiotics.ViewModels
             dialogService = new DialogService();
             navigationService = new NavigationService();
             IsEnabled = false;
+            FiltroFechasIsEnabled = false;
             FechaInicial = DateTime.Now;
             FechaFinal = DateTime.Now;
             InvoiceHeaders = new ObservableCollection<InvoiceHeader>();
@@ -332,6 +350,14 @@ namespace NutraBiotics.ViewModels
             try
             {
                 invoiceHeaders = null;
+
+
+                if (Calendar == null && FiltroFechas == false)
+                {
+                    await dialogService.ShowMessage("Validacion",
+                          "Debes seleccionar un filtro antes de ejecutar la busqueda.");
+                    return;
+                }
 
                 if (FacturaConSaldo && FiltroFechas==false)
                 {

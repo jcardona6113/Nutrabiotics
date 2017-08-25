@@ -16,33 +16,35 @@
         </OnPlatform>
     </ContentPage.Padding>
     <ContentPage.Content>
+
         <StackLayout
+				BackgroundColor="{StaticResource AccentColor1}"
 				BindingContext="{Binding SearchInvoices}">
             <ScrollView>
                 <StackLayout
                     HeightRequest="320">
                     <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Image
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image
 						VerticalOptions="Center"
 						Source="ic_personWTE.png"
 						Grid.Row="0"
 						Grid.Column="0">
-                    </Image>
-                    <Entry
+                        </Image>
+                        <Entry
 						FontSize="Small"
 						BackgroundColor="White"
 						Text="{Binding Customer.Names, Mode=TwoWay}"
@@ -51,24 +53,24 @@
 						Grid.Row="0"
 						Grid.Column="1"
 						Grid.ColumnSpan="2">
-                    </Entry>
-                    <Image
+                        </Entry>
+                        <Image
 						VerticalOptions="Center"
 						Source="ic_search.png"
 						Grid.Row="0"
 						Grid.Column="3">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SearchCustomerInvoiceCommand}"/>
-                        </Image.GestureRecognizers>
-                    </Image>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SearchCustomerInvoiceCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
 
-                    <Image
+                        <Image
 						Source="ic_date_range.png"
 						VerticalOptions="Center"
 						Grid.Row="1"
 						Grid.Column="0">
-                    </Image>
-                    <Entry
+                        </Image>
+                        <Entry
 						
 						BackgroundColor="White"
 						Text="{Binding Calendar.Description, Mode=TwoWay}"
@@ -78,63 +80,64 @@
 						Grid.Row="1"
 						Grid.Column="1"
                         Grid.ColumnSpan="2">
-                    </Entry>
-                    <Image
+                        </Entry>
+                        <Image
 						VerticalOptions="Center"
 						Source="ic_search.png"
 						Grid.Row="1"
 						Grid.Column="3">
 
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SearchCalendarCommand}"/>
-                        </Image.GestureRecognizers>
-                    </Image>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SearchCalendarCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
 
-                    <Label
+                        <Label
 						Grid.Row="2"
 						Grid.Column="1"
 						TextColor="{StaticResource FontColor}"
 						Text="F.Fechas"
                             HorizontalOptions="Start"
 						VerticalOptions="Center">
-                    </Label>
+                        </Label>
 
-                    <Switch
-						IsEnabled="{Binding IsEnabled}"
+                        <Switch
+						IsEnabled="{Binding FiltroFechasIsEnabled}"
 						Grid.Row="2"
 						Grid.Column="1"
 						VerticalOptions="Center"
-                               HorizontalOptions="End"
+                        HorizontalOptions="End"
 						IsToggled="{Binding FiltroFechas, Mode=TwoWay}">
-                    </Switch>
+                        </Switch>
 
 
-                    <Label
+                        <Label
 						Grid.Row="2"
 						Grid.Column="2"
 						TextColor="{StaticResource FontColor}"
 						Text="F.Saldo"
                     HorizontalOptions="Start"
 						VerticalOptions="Center">
-                    </Label>
-                    <Switch
+                        </Label>
+                        <Switch
+                        IsEnabled="{Binding IsEnabled}"
 						Grid.Row="2"
 						Grid.Column="2"
 						VerticalOptions="Center"
                            HorizontalOptions="End"
 						IsToggled="{Binding FacturaConSaldo, Mode=TwoWay}">
-                    </Switch>
+                        </Switch>
 
-                    <Label
+                        <Label
 						Grid.Row="3"
 						Grid.Column="0"
 						VerticalOptions="Center"
 						Text="F.Inicial"
 						HorizontalOptions="Start"
 						TextColor="{StaticResource FontColor}">
-                    </Label>
+                        </Label>
 
-                    <DatePicker
+                        <DatePicker
                         IsEnabled="{Binding FiltroFechas, Mode=TwoWay}"
 						Grid.Row="3"
 						Grid.Column="1"
@@ -142,18 +145,18 @@
 						VerticalOptions="Center"
 						BackgroundColor="White"
 						Date="{Binding FechaInicial}">
-                    </DatePicker>
+                        </DatePicker>
 
-                    <Label
+                        <Label
 						Grid.Row="4"
 						Grid.Column="0"
 						VerticalOptions="Center"
 						TextColor="{StaticResource FontColor}"
 						Text="F.Final:"
 						HorizontalOptions="Start">
-                    </Label>
+                        </Label>
 
-                    <DatePicker
+                        <DatePicker
                         IsEnabled="{Binding FiltroFechas, Mode=TwoWay}"
 						Grid.Row="4"
 						Grid.Column="1"
@@ -161,14 +164,14 @@
 						VerticalOptions="Center"
 						BackgroundColor="White"
 						Date="{Binding FechaFinal}">
-                    </DatePicker>
+                        </DatePicker>
                     </Grid>
                 </StackLayout>
             </ScrollView>
 
 
             <Button
-
+                    IsEnabled="{Binding IsEnabled}"
 					WidthRequest="200"
 					Command="{Binding SearchCommand}"
 					HorizontalOptions="FillAndExpand"
@@ -176,167 +179,180 @@
 					FontAttributes="Bold"
 					BackgroundColor="{StaticResource AccentColor2}"
 					Text="Buscar">
-                </Button>
+            </Button>
 
-  
+
             <StackLayout>
 
-                    <ListView
+                <ListView
 						BackgroundColor="{StaticResource AccentColor1}"
 						SeparatorVisibility="Default"
 						ItemsSource="{Binding InvoiceHeaders}"
 						HasUnevenRows="True">
-                        <ListView.Header>
-                            <ContentView
+
+                    <ListView.Header>
+                        <ContentView
 								Padding="0,5" 
 								BackgroundColor="{StaticResource AccentColor2}">
-                                <ContentView.Triggers>
-                                    <DataTrigger
+
+                            <ContentView.Triggers>
+                                <DataTrigger
 										TargetType="ContentView"
 										Binding="{Binding InvoiceHeaders.Count}"
 										Value="0">
-                                        <Setter
+                                    <Setter
 											Property="IsVisible"
 											Value="False">
-                                        </Setter>
-                                    </DataTrigger>
-                                </ContentView.Triggers>
-                                <Label 
+                                    </Setter>
+                                </DataTrigger>
+                            </ContentView.Triggers>
+
+                            <Label 
 									FontAttributes="Bold"
 									FontSize="Large" 
 									TextColor="White"
 									Text="Facturas" 
+
 									HorizontalTextAlignment="Center" 
 									VerticalTextAlignment="Center" />
-                            </ContentView>
-                        </ListView.Header>
+                        </ContentView>
+                    </ListView.Header>
 
-                        <ListView.Footer>
-                            <ContentView 
+
+                    <ListView.Footer>
+                        <ContentView 
 								Padding="0,5" 
 								BackgroundColor="{StaticResource AccentColor2}">
-                                <ContentView.Triggers>
-                                    <DataTrigger
+                            <ContentView.Triggers>
+                                <DataTrigger
 										TargetType="ContentView"
-										Binding="{Binding InvoiceHeaders.Count}"
+										Binding="{Binding TotalLineas}"
 										Value="0">
-                                        <Setter
+                                    <Setter
 											Property="IsVisible"
 											Value="False">
-                                        </Setter>
-                                    </DataTrigger>
-                                </ContentView.Triggers>
+                                    </Setter>
+                                </DataTrigger>
+                            </ContentView.Triggers>
+                            <StackLayout>
                                 <Label 
 									FontSize="Large"
 									FontAttributes="Bold"
 									TextColor="White"
 									Text="{Binding TotalLineas, StringFormat='Total Facturas: {0:C2}'}" 
 									HorizontalTextAlignment="Center" 
-									VerticalTextAlignment="Center" />
+									VerticalTextAlignment="Center">
+                                </Label>
+
                                 <Label 
 									FontSize="Large"
 									FontAttributes="Bold"
 									TextColor="#F75D70"
 									Text="{Binding TotalSaldo, StringFormat='Total Saldo: {0:C2}'}" 
 									HorizontalTextAlignment="Center" 
-									VerticalTextAlignment="Center" />
-                            </ContentView>
-                        </ListView.Footer>
+									VerticalTextAlignment="Center">
+                                </Label>
+                            </StackLayout>
+                        </ContentView>
+                    </ListView.Footer>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid
 										BackgroundColor="White">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <StackLayout 
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout 
 											Grid.Column="0">
-                                            <Label
+                                        <Label
 												BackgroundColor="{StaticResource AccentColor1}"
 												FontSize="Medium"
 												FontAttributes="Bold"        
 												TextColor="{StaticResource FontColor}"
 												Text="{Binding InvoiceNum, StringFormat='Numero Factura: {0}'}">
-                                                <Label.Triggers>
-                                                    <DataTrigger
+                                            <Label.Triggers>
+                                                <DataTrigger
 														TargetType="Label"
 														Binding="{Binding ColorGrilla}"
 														Value="Rojo">
-                                                        <Setter
+                                                    <Setter
 															Property="BackgroundColor"
 															Value="#F75D70">
-                                                        </Setter>
-                                                    </DataTrigger>
+                                                    </Setter>
+                                                </DataTrigger>
 
-                                                    <DataTrigger
+                                                <DataTrigger
 														TargetType="Label"
 														Binding="{Binding ColorGrilla}"
 														Value="Naranja">
-                                                        <Setter
+                                                    <Setter
 															Property="BackgroundColor"
 															Value="#FF8A33">
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                    <DataTrigger
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
 														TargetType="Label"
 														Binding="{Binding ColorGrilla}"
 														Value="Amarillo">
-                                                        <Setter
+                                                    <Setter
 															Property="BackgroundColor"
 															Value="#FFCE33">
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                    <DataTrigger
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
 														TargetType="Label"
 														Binding="{Binding ColorGrilla}"
 														Value="Verde">
-                                                        <Setter
+                                                    <Setter
 															Property="BackgroundColor"
 															Value="#33FF61">
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                </Label.Triggers>
-                                            </Label>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
 
-                                            <Label 
+                                        <Label 
 												TextColor="{StaticResource FontColor}"
 												Text="{Binding InvoiceDate, StringFormat='Fecha Factura: {0:yyyy/MM/dd}'}">
 
-                                            </Label>
-                                            <Label 
+                                        </Label>
+                                        <Label 
 												TextColor="{StaticResource FontColor}"
 												Text="{Binding DueDate, StringFormat='Fecha Vecimiento: {0:yyyy/MM/dd}'}">
 
 
-                                            </Label>
-                                            <Label 
+                                        </Label>
+                                        <Label 
+
 												TextColor="{StaticResource FontColor}"
 												Text="{Binding InvoiceAmt, StringFormat='Monto: {0:C2}'}">
 
-                                            </Label>
-                                            <Label 
+                                        </Label>
+                                        <Label 
 												TextColor="{StaticResource FontColor}"
 												Text="{Binding InvoiceBal, StringFormat='Saldo: {0:C2}'}">
 
-                                            </Label>
-                                        </StackLayout>
-                                        <Image 
+                                        </Label>
+                                    </StackLayout>
+                                    <Image 
 											Grid.Column="1"
 											Source="ic_chevron_right.png">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ViewInvoiceDetailCommand}"/>
-                                            </Image.GestureRecognizers>
-                                        </Image>
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackLayout>
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ViewInvoiceDetailCommand}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
 
