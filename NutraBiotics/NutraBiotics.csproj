@@ -98,6 +98,9 @@
     <Compile Include="ViewModels\SearchPriceListPartViewModel.cs" />
     <Compile Include="ViewModels\ShipToRequest.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
+    <Compile Include="Views\CashHeadersListPage.xaml.cs">
+      <DependentUpon>CashHeadersListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CustomersPage.xaml.cs">
       <DependentUpon>CustomersPage.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,9 @@
     </Compile>
     <Compile Include="Views\NewPersonContactPage.xaml.cs">
       <DependentUpon>NewPersonContactPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InvoicesListPage.xaml.cs">
+      <DependentUpon>InvoicesListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PersonContactsPage.xaml.cs">
       <DependentUpon>PersonContactsPage.xaml</DependentUpon>
@@ -382,6 +388,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\InvoiceDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\InvoicesListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CashHeadersListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -730,13 +730,15 @@
                     return;
                 }
 
-                if (string.IsNullOrEmpty(NewShipTo.Country))
+                if (string.IsNullOrEmpty(NewShipTo.Description))
                 {
                     await dialogService.ShowMessage(
                     "Error",
                     "Debes seleccionar un pais.");
                     return;
                 }
+
+                NewShipTo.IsRunning = true;
 
                 //var UltimoRegistro = dataService
                 //.Get<ShipTo>(false)
@@ -761,7 +763,7 @@
                     Company = User.Company,
                     ShipToName = NewShipTo.ShipToName,
                     TerritoryEpicorID = NewShipTo.TerritoryEpicorID,
-                    Country = NewShipTo.Country,
+                    Country = NewShipTo.Description,
                     State = NewShipTo.State,
                     City = NewShipTo.City,
                     Address = NewShipTo.Address,
@@ -825,8 +827,9 @@
                 };
 
                 dataService.Insert(ShipToToInsert);
-
+                NewShipTo.IsRunning = false;
                 await dialogService.ShowMessage("Exito", "Se inserto el registro con exito.");
+                EditCustomer.RefreshShipTo();
                 await navigationService.Back();
                 #endregion
             }
@@ -1013,24 +1016,24 @@
                     return;
                 }
 
-                var main = MainViewModel.GetInstance();
+                EditShipTo.IsRunning = true;
 
                 var ShipToToUpdate= new SyncShiptoRequest
                 {
-                    Address = main.EditShipTo.ShipTo.Address,
-                    City = main.EditShipTo.ShipTo.City,
-                    Company = main.EditShipTo.ShipTo.Company,
-                    Country = main.EditShipTo.ShipTo.Country,
-                    CustNum = main.EditShipTo.ShipTo.CustNum,
-                    CustomerId = main.EditShipTo.ShipTo.CustomerId,
-                    Email = main.EditShipTo.ShipTo.Email,
-                    PhoneNum = main.EditShipTo.ShipTo.PhoneNum,
-                    ShipToId = main.EditShipTo.ShipTo.ShipToId,
-                    ShipToName = main.EditShipTo.ShipTo.ShipToName,
-                    ShipToNum = main.EditShipTo.ShipTo.ShipToNum,
+                    Address = EditShipTo.ShipTo.Address,
+                    City = EditShipTo.ShipTo.City,
+                    Company = EditShipTo.ShipTo.Company,
+                    Country = EditShipTo.ShipTo.Country,
+                    CustNum = EditShipTo.ShipTo.CustNum,
+                    CustomerId = EditShipTo.ShipTo.CustomerId,
+                    Email = EditShipTo.ShipTo.Email,
+                    PhoneNum = EditShipTo.ShipTo.PhoneNum,
+                    ShipToId = EditShipTo.ShipTo.ShipToId,
+                    ShipToName = EditShipTo.ShipTo.ShipToName,
+                    ShipToNum = EditShipTo.ShipTo.ShipToNum,
                     SincronizadoEpicor = false,
-                    State = main.EditShipTo.ShipTo.State,
-                    TerritoryEpicorID = main.EditShipTo.ShipTo.TerritoryEpicorID,
+                    State = EditShipTo.ShipTo.State,
+                    TerritoryEpicorID = EditShipTo.ShipTo.TerritoryEpicorID,
                     VendorId = User.VendorId,
                 };
 
@@ -1065,10 +1068,10 @@
                     VendorId = User.VendorId,
                 };
 
-                dataService.Delete(main.EditShipTo.ShipTo);
+                dataService.Delete(EditShipTo.ShipTo);
 
                 dataService.Insert(ShipToToInsert);
-
+                EditShipTo.IsRunning = false;
                 await dialogService.ShowMessage("Exito", "Se actualizo el registro con exito.");
                 await navigationService.Back();
 

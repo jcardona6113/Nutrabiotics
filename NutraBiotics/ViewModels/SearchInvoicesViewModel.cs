@@ -31,6 +31,8 @@ namespace NutraBiotics.ViewModels
         DateTime _fechaInicial;
         DateTime _fechaFinal;
         bool _filtroFechasIsEnabled;
+        bool _hayFiltro;
+        bool _filtroPeriodo;
 
 
         #endregion
@@ -97,6 +99,94 @@ namespace NutraBiotics.ViewModels
             }
         }
 
+        public bool FiltroPeriodo
+        {
+            set
+            {
+                if (_filtroPeriodo != value)
+                {
+                    _filtroPeriodo = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(FiltroPeriodo)));
+                }
+            }
+            get
+            {
+                return _filtroPeriodo;
+            }
+        }
+
+        public bool FacturaConSaldo
+        {
+            set
+            {
+                if (_facturaconsaldo != value)
+                {
+                    _facturaconsaldo = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(FacturaConSaldo)));
+                }
+            }
+            get
+            {
+                return _facturaconsaldo;
+            }
+        }
+
+        public bool FiltroFechasIsEnabled
+        {
+            set
+            {
+                if (_filtroFechasIsEnabled != value)
+                {
+                    _filtroFechasIsEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FiltroFechasIsEnabled)));
+                }
+            }
+            get
+            {
+                return _filtroFechasIsEnabled;
+            }
+        }
+
+        public bool HayFiltro
+        {
+            set
+            {
+                if (_hayFiltro != value)
+                {
+                    _hayFiltro = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(HayFiltro)));
+                }
+            }
+            get
+            {
+                return _hayFiltro;
+            }
+        }
+
+        public bool FiltroFechas
+        {
+            set
+            {
+                if (_filtrofechas != value)
+                {
+                    _filtrofechas = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(FiltroFechas)));
+                }
+            }
+            get
+            {
+                return _filtrofechas;
+            }
+        }
+
         public decimal TotalSaldo
         {
             set
@@ -129,22 +219,6 @@ namespace NutraBiotics.ViewModels
             }
         }
 
-        public bool FiltroFechasIsEnabled
-        {
-            set
-            {
-                if (_filtroFechasIsEnabled != value)
-                {
-                    _filtroFechasIsEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FiltroFechasIsEnabled)));
-                }
-            }
-            get
-            {
-                return _filtroFechasIsEnabled;
-            }
-        }
-
         public bool IsRefreshing
         {
             set
@@ -160,42 +234,6 @@ namespace NutraBiotics.ViewModels
             get
             {
                 return _isRefreshing;
-            }
-        }
-
-        public bool FacturaConSaldo
-        {
-            set
-            {
-                if (_facturaconsaldo != value)
-                {
-                    _facturaconsaldo = value;
-                    PropertyChanged?.Invoke(
-                        this,
-                        new PropertyChangedEventArgs(nameof(FacturaConSaldo)));
-                }
-            }
-            get
-            {
-                return _facturaconsaldo;
-            }
-        }
-
-        public bool FiltroFechas
-        {
-            set
-            {
-                if (_filtrofechas != value)
-                {
-                    _filtrofechas = value;
-                    PropertyChanged?.Invoke(
-                        this,
-                        new PropertyChangedEventArgs(nameof(FiltroFechas)));
-                }
-            }
-            get
-            {
-                return _filtrofechas;
             }
         }
 
@@ -261,8 +299,6 @@ namespace NutraBiotics.ViewModels
             dataService = new DataService();
             dialogService = new DialogService();
             navigationService = new NavigationService();
-            IsEnabled = false;
-            FiltroFechasIsEnabled = false;
             FechaInicial = DateTime.Now;
             FechaFinal = DateTime.Now;
             InvoiceHeaders = new ObservableCollection<InvoiceHeader>();
@@ -275,9 +311,16 @@ namespace NutraBiotics.ViewModels
 
         public static SearchInvoicesViewModel GetInstance()
         {
+            if (instance == null)
+            {
+                return new SearchInvoicesViewModel();
+            }
+
             return instance;
         }
         #endregion
+
+
 
         #region Methods
 
@@ -324,7 +367,7 @@ namespace NutraBiotics.ViewModels
                 {
                     await dialogService.ShowMessage(
                         "Error",
-                        "Debes descargar los calendarios.");
+                        "Debes descargar periodos.");
                     return;
                 }
 
@@ -345,66 +388,57 @@ namespace NutraBiotics.ViewModels
             get { return new RelayCommand(Search); }
         }
 
-        async void Search()
+        public async void Search()
         {
             try
             {
-                invoiceHeaders = null;
-
-
-                if (Calendar == null && FiltroFechas == false)
+                if (Customer == null)
                 {
                     await dialogService.ShowMessage("Validacion",
-                          "Debes seleccionar un filtro antes de ejecutar la busqueda.");
+                        "Debes seleccionar un cliente antes de ejecutar la busqueda.");
                     return;
                 }
 
-                if (FacturaConSaldo && FiltroFechas==false)
+                InvoiceHeaders.Clear();
+                TotalLineas = 0;
+
+                if (FiltroFechas || FiltroPeriodo || FacturaConSaldo) { HayFiltro = true; }
+
+                if (HayFiltro)
                 {
-                    if (Customer == null)
+
+                    if (FiltroFechas && FiltroPeriodo)
                     {
                         await dialogService.ShowMessage("Validacion",
-                            "Debes seleccionar un cliente antes de ejecutar la busqueda.");
+                            "No es posible filtrar por rango de fechas y periodo a la vez.");
                         return;
                     }
 
-                    if (Calendar == null)
-                    {
-                        await dialogService.ShowMessage("Validacion",
-                            "Debes seleccionar un periodo antes de ejecutar la busqueda.");
-                        return;
-                    }
-
-
-
-                    var facturasconsaldo = dataService
-                        .Get<InvoiceHeader>(true)
-                        .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")) && s.InvoiceBal > 0)
-                        .ToList();
-
-
-                    if (facturasconsaldo == null || facturasconsaldo.Count == 0)
-
-                    {
-                        await dialogService.ShowMessage("Informacion", "El cliente, no posee facturas con saldo.");
-                        return;
-                    }
-
-                    InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasconsaldo);
-                    TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
-                    TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
-
-                }
-
-                    if (FiltroFechas && FacturaConSaldo == false)
+                    //filtro x fact saldo
+                    if (FacturaConSaldo == true && FiltroPeriodo == false && FiltroFechas == false)
                     {
 
-                        if (Customer == null)
+                        var facturasconsaldo = dataService
+                            .Get<InvoiceHeader>(true)
+                            .Where(s => s.CustNum == Customer.CustNum && s.InvoiceBal > 0)
+                            .ToList();
+
+
+                        if (facturasconsaldo == null || facturasconsaldo.Count == 0)
+
                         {
-                            await dialogService.ShowMessage("Validacion",
-                                "Debes seleccionar un cliente antes de ejecutar la busqueda.");
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra facturas con saldo.");
                             return;
                         }
+
+                        InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasconsaldo);
+                        TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+                        TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                    }
+
+                    //filtro x fechas
+                    if (FiltroFechas == true && FiltroPeriodo == false && FacturaConSaldo == false)
+                    {
 
                         var invoicesxfechas = dataService
                          .Get<InvoiceHeader>(true)
@@ -414,81 +448,122 @@ namespace NutraBiotics.ViewModels
                         if (invoicesxfechas == null || invoicesxfechas.Count == 0)
 
                         {
-                            await dialogService.ShowMessage("Informacion", "El cliente, no posee facturas registradas en el rango de fechas seleccionado.");
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra facturas en el rango de fechas seleccionado.");
                             return;
                         }
 
                         InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoicesxfechas);
-                    TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
-                    TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                        TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+                        TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                    }
+
+                    //filtro x fechas y fact. con saldo
+                    if (FiltroFechas == true && FacturaConSaldo == true && FiltroPeriodo == false)
+                    {
+                        var invoicesxfechas = dataService
+                         .Get<InvoiceHeader>(true)
+                         .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(FechaInicial.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(FechaFinal.ToString("yyyy/MM/dd")) && s.InvoiceBal > 0)
+                         .ToList();
+
+                        if (invoicesxfechas == null || invoicesxfechas.Count == 0)
+
+                        {
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra facturas con saldo en el rango de fechas seleccionado.");
+                            return;
+                        }
+
+                        InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoicesxfechas);
+                        TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+                        TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                    }
+
+                    //filtro x periodo
+                    if (FiltroPeriodo == true && FiltroFechas == false && FacturaConSaldo == false)
+                    {
+
+                        if (Calendar == null)
+                        {
+                            await dialogService.ShowMessage("Informacion", "Debes seleccionar un periodo.");
+                            return;
+                        }
+
+
+                        var facturasxperiodo = dataService
+                         .Get<InvoiceHeader>(true)
+                         .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
+                         .ToList();
+
+                        if (facturasxperiodo == null || facturasxperiodo.Count == 0)
+
+                        {
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra facturas en el periodo seleccionado.");
+                            return;
+                        }
+
+                        InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasxperiodo);
+                        TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+                        TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                    }
+
+                    //filtro x periodo y fact. con saldo
+                    if (FiltroPeriodo == true && FacturaConSaldo == true && FiltroFechas == false)
+                    {
+                        if (Calendar == null)
+                        {
+                            await dialogService.ShowMessage("Informacion", "Debes seleccionar un periodo.");
+                            return;
+                        }
+
+
+                        var facturasxpreiodo = dataService
+                         .Get<InvoiceHeader>(true)
+                         .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
+                         .ToList();
+
+                        if (facturasxpreiodo == null || facturasxpreiodo.Count == 0)
+
+                        {
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra facturas en el periodo seleccionado.");
+                            return;
+                        }
+
+                        InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasxpreiodo);
+                        TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
+                        TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                    }
+
                 }
 
+                else
 
-                if (FiltroFechas && FacturaConSaldo)
                 {
 
-                    if (Customer == null)
+                    var facturas = dataService
+                           .Get<InvoiceHeader>(true)
+                           .Where(s => s.CustNum == Customer.CustNum)
+                           .ToList();
+
+                    if (facturas == null || facturas.Count == 0)
+
                     {
-                        await dialogService.ShowMessage("Validacion",
-                            "Debes seleccionar un cliente antes de ejecutar la busqueda.");
+                        await dialogService.ShowMessage("Informacion", "El cliente, no registra facturas.");
                         return;
                     }
 
-
-                    var invoicesxfechas = dataService
-                     .Get<InvoiceHeader>(true)
-                     .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(FechaInicial.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(FechaFinal.ToString("yyyy/MM/dd")) && s.InvoiceBal > 0)
-                     .ToList();
-
-                    if (invoicesxfechas == null || invoicesxfechas.Count == 0)
-
-                    {
-                        await dialogService.ShowMessage("Informacion", "El cliente, no posee facturas con saldo en el rango de fechas seleccionado.");
-                        return;
-                    }
-
-                    InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoicesxfechas);
-
+                    InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturas);
                     TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                     TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
                 }
 
-                if (Calendar != null && FiltroFechas == false && FacturaConSaldo == false)
-                {
-
-                    if (Customer == null)
-                    {
-                        await dialogService.ShowMessage("Validacion",
-                            "Debes seleccionar un cliente antes de ejecutar la busqueda.");
-                        return;
-                    }
-
-
-                    var invoices = dataService
-                     .Get<InvoiceHeader>(true)
-                     .Where(s => s.CustNum == Customer.CustNum && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.InvoiceDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
-                     .ToList();
-
-                    if (invoices == null || invoices.Count == 0)
-
-                    {
-                        await dialogService.ShowMessage("Informacion", "El cliente, no posee facturas en el periodo seleccionado.");
-                        return;
-                    }
-
-                    InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoices);
-                    TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
-                    TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
-                }
+                await navigationService.Navigate("InvoicesListPage");
 
             }
 
             catch (Exception ex)
             {
-         
+
                 await dialogService.ShowMessage("Error", ex.Message);
             }
-
         }
 
         #endregion

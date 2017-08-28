@@ -6,7 +6,7 @@
     <ProjectGuid>{F273FF76-8BF3-4FA6-AA54-2163B0D485B2}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>NutraBiotics.Droid</RootNamespace>
+    <RootNamespace>NutraBiotics</RootNamespace>
     <AssemblyName>NutraBiotics.Droid</AssemblyName>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>

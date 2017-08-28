@@ -29,7 +29,8 @@
 			}
 		}
 
-		public T DeleteAllAndInsert<T>(T model) where T : class
+
+        public T DeleteAllAndInsert<T>(T model) where T : class
 		{
 			try
 			{

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NutraBiotics.Views.CashHeadersListPage"
+             Title="Listado de pagos"
+		     BackgroundColor="{StaticResource AccentColor1}"
+		     BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <ContentPage.Content>
+
+        <StackLayout
+                BindingContext="{Binding SearchCashHeader}"
+                MinimumHeightRequest="200">
+            <ListView
+						BackgroundColor="{StaticResource AccentColor1}"
+						SeparatorVisibility="Default"
+						ItemsSource="{Binding CashHeaders}"
+						HasUnevenRows="True">
+
+                <ListView.Header>
+                        <ContentView 
+								Padding="0,5" 
+								BackgroundColor="{StaticResource AccentColor2}">
+
+                            <ContentView.Triggers>
+                                <DataTrigger
+										TargetType="ContentView"
+										Binding="{Binding CashHeaders.Count}"
+										Value="0">
+                                    <Setter
+											Property="IsVisible"
+											Value="False">
+                                    </Setter>
+                                </DataTrigger>
+                            </ContentView.Triggers>
+
+                            <Label 
+									FontAttributes="Bold"
+									FontSize="Large" 
+									TextColor="White"
+
+									Text="Pagos" 
+									HorizontalTextAlignment="Center" 
+									VerticalTextAlignment="Center" />
+                        </ContentView>
+                    </ListView.Header>
+
+
+                <ListView.Footer>
+                    <ContentView 
+								Padding="0,5" 
+								BackgroundColor="{StaticResource AccentColor2}">
+                        <ContentView.Triggers>
+                            <DataTrigger
+										TargetType="ContentView"
+										Binding="{Binding TotalLineas}"
+										Value="0">
+                                <Setter
+											Property="IsVisible"
+											Value="False">
+                                </Setter>
+                            </DataTrigger>
+                        </ContentView.Triggers>
+
+                        <Label 
+									FontSize="Large"
+									FontAttributes="Bold"
+									TextColor="White"
+									Text="{Binding TotalLineas, StringFormat='Total Pagos: {0:C2}'}" 
+									HorizontalTextAlignment="Start" 
+									VerticalTextAlignment="Center">
+                        </Label>
+
+
+                    </ContentView>
+                </ListView.Footer>
+
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+
+                            <Grid
+								    BackgroundColor="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout 
+											Grid.Column="0">
+                                    <Label
+
+
+												FontAttributes="Bold"
+												TextColor="{StaticResource FontColor}"
+                                                FontSize="Medium"
+												Text="{Binding InvoiceNum, StringFormat='Numero factura: {0} '}">
+
+
+                                    </Label>
+
+                                    <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding TranDate, StringFormat='Fecha pago: {0:yyyy/MM/dd}'}">
+
+                                    </Label>
+
+
+                                    <Label 
+												FontAttributes="Bold"
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding TranAmt, StringFormat='Valor pago: {0:C2}'}">
+
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+
+
+    </ContentPage.Content>
+</ContentPage>

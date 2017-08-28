@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NutraBiotics.Views.InvoicesListPage"
+             Title="Listado de facturas"
+		     BackgroundColor="{StaticResource AccentColor1}"
+		     BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
+
+    <ContentPage.Padding>
+        <OnPlatform 
+				x:TypeArguments="Thickness" 
+				iOS="10,20,10,10" 
+				Android="10">
+        </OnPlatform>
+    </ContentPage.Padding>
+
+
+    <ContentPage.Content>
+        <StackLayout
+                BindingContext="{Binding SearchInvoices}"
+                MinimumHeightRequest="200">
+                <ListView
+						BackgroundColor="{StaticResource AccentColor1}"
+						SeparatorVisibility="Default"
+						ItemsSource="{Binding InvoiceHeaders}"
+						HasUnevenRows="True">
+                    <ListView.Header>
+                        <ContentView
+								Padding="0,5" 
+								BackgroundColor="{StaticResource AccentColor2}">
+
+                            <ContentView.Triggers>
+                                <DataTrigger
+										TargetType="ContentView"
+										Binding="{Binding InvoiceHeaders.Count}"
+										Value="0">
+                                    <Setter
+											Property="IsVisible"
+											Value="False">
+                                    </Setter>
+                                </DataTrigger>
+                            </ContentView.Triggers>
+
+                            <Label 
+									FontAttributes="Bold"
+									FontSize="Large" 
+									TextColor="White"
+									Text="Facturas" 
+
+									HorizontalTextAlignment="Center" 
+									VerticalTextAlignment="Center" />
+                        </ContentView>
+                    </ListView.Header>
+
+
+                <ListView.Footer>
+                    <ContentView 
+								Padding="0,5" 
+								BackgroundColor="{StaticResource AccentColor2}">
+                        <ContentView.Triggers>
+                            <DataTrigger
+										TargetType="ContentView"
+										Binding="{Binding TotalLineas}"
+										Value="0">
+                                <Setter
+											Property="IsVisible"
+											Value="False">
+                                </Setter>
+                            </DataTrigger>
+                        </ContentView.Triggers>
+                        <StackLayout>
+                            <Label 
+									FontSize="Large"
+									FontAttributes="Bold"
+									TextColor="White"
+									Text="{Binding TotalLineas, StringFormat='Total Facturas: {0:C2}'}" 
+									HorizontalTextAlignment="Center" 
+									VerticalTextAlignment="Center">
+                            </Label>
+
+                            <Label 
+									FontSize="Large"
+									FontAttributes="Bold"
+									TextColor="#F75D70"
+									Text="{Binding TotalSaldo, StringFormat='Total Saldo: {0:C2}'}" 
+									HorizontalTextAlignment="Center" 
+									VerticalTextAlignment="Center">
+                            </Label>
+                        </StackLayout>
+                    </ContentView>
+                </ListView.Footer>
+
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid
+										BackgroundColor="White">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout 
+											Grid.Column="0">
+                                    <Label
+												BackgroundColor="{StaticResource AccentColor1}"
+												FontSize="Medium"
+												FontAttributes="Bold"        
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding InvoiceNum, StringFormat='Numero Factura: {0}'}">
+                                        <Label.Triggers>
+                                            <DataTrigger
+														TargetType="Label"
+														Binding="{Binding ColorGrilla}"
+														Value="Rojo">
+                                                <Setter
+															Property="BackgroundColor"
+															Value="#F75D70">
+                                                </Setter>
+                                            </DataTrigger>
+
+                                            <DataTrigger
+														TargetType="Label"
+														Binding="{Binding ColorGrilla}"
+														Value="Naranja">
+                                                <Setter
+															Property="BackgroundColor"
+															Value="#FF8A33">
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger
+														TargetType="Label"
+														Binding="{Binding ColorGrilla}"
+														Value="Amarillo">
+                                                <Setter
+															Property="BackgroundColor"
+															Value="#FFCE33">
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger
+														TargetType="Label"
+														Binding="{Binding ColorGrilla}"
+														Value="Verde">
+                                                <Setter
+															Property="BackgroundColor"
+															Value="#33FF61">
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding InvoiceDate, StringFormat='Fecha Factura: {0:yyyy/MM/dd}'}">
+
+                                    </Label>
+                                    <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding DueDate, StringFormat='Fecha Vencimiento: {0:yyyy/MM/dd}'}">
+
+
+                                    </Label>
+                                    <Label 
+
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding InvoiceAmt, StringFormat='Monto: {0:C2}'}">
+
+                                    </Label>
+                                    <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding InvoiceBal, StringFormat='Saldo: {0:C2}'}">
+
+                                    </Label>
+
+                                    <Label 
+												TextColor="{StaticResource FontColor}"
+												Text="{Binding DiasVencidos, StringFormat='Dias Vencidos: {0}'}">
+
+                                    </Label>
+
+                                </StackLayout>
+                                <Image 
+											Grid.Column="1"
+											Source="ic_chevron_right.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ViewInvoiceDetailCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

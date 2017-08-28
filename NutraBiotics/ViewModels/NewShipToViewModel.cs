@@ -32,6 +32,7 @@
         string _shiptonum;
         string _country;
         string _state;
+        bool isRunning;
         string _city;
         string _address;
         string _phonenum;
@@ -44,6 +45,22 @@
         #endregion
 
         #region Properties
+
+        public bool IsRunning
+        {
+            set
+            {
+                if (isRunning != value)
+                {
+                    isRunning = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
+                }
+            }
+            get
+            {
+                return isRunning;
+            }
+        }
 
 
         public ObservableCollection<Country> Countries
@@ -283,6 +300,7 @@
             dataService = new DataService();
             navigationservice = new NavigationService();
             Territories = new ObservableCollection<Territory>();
+            IsRunning = false;
 
         }
 
@@ -294,6 +312,7 @@
         {
             var countrieslist = dataService
                 .Get<Country>(false)
+                .OrderBy(t => t.Description)
                 .ToList();
 
             Countries = new ObservableCollection<Country>(countrieslist);
@@ -303,6 +322,7 @@
         {
             var territorieslist = dataService
                 .Get<Territory>(false)
+                .OrderBy(t=> t.TerritoryDesc)
                 .ToList();
 
             Territories = new ObservableCollection<Territory>(territorieslist);

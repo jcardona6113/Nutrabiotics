@@ -224,6 +224,11 @@
 
                         </Entry>
                     </StackLayout>
+
+                    <ActivityIndicator
+                        HorizontalOptions="Center"
+                        IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                    </ActivityIndicator>
                 </StackLayout>
 
 

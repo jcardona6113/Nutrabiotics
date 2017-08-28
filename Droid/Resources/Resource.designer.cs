@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("NutraBiotics.Droid.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("NutraBiotics.Resource", IsApplication=true)]
 
-namespace NutraBiotics.Droid
+namespace NutraBiotics
 {
 	
 	
@@ -26,9 +26,9 @@ namespace NutraBiotics.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::NutraBiotics.Droid.Resource.String.ApplicationName;
-			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::NutraBiotics.Droid.Resource.String.Hello;
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::NutraBiotics.Droid.Resource.Attribute.actionBarSize;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::NutraBiotics.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::NutraBiotics.Resource.String.Hello;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::NutraBiotics.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

@@ -101,8 +101,13 @@
                 case "InvoiceDetailPage":
                     await App.Navigator.PushAsync(new InvoiceDetailPage());
                     break;
+
+                case "InvoicesListPage":
+                    await App.Navigator.PushAsync(new InvoicesListPage());
+                    break;
+
             }
-    }
+        }
 
         public async Task Back()
         {

@@ -31,6 +31,8 @@
         bool isEnabled;
         DateTime _fechaInicial;
         DateTime _fechaFinal;
+        bool _hayFiltro;
+        bool _filtroPeriodo;
 
         #endregion
 
@@ -114,6 +116,44 @@
             }
         }
 
+
+        public bool FiltroPeriodo
+        {
+            set
+            {
+                if (_filtroPeriodo != value)
+                {
+                    _filtroPeriodo = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(FiltroPeriodo)));
+                }
+            }
+            get
+            {
+                return _filtroPeriodo;
+            }
+        }
+
+
+        public bool HayFiltro
+        {
+            set
+            {
+                if (_hayFiltro != value)
+                {
+                    _hayFiltro = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(HayFiltro)));
+                }
+            }
+            get
+            {
+                return _hayFiltro;
+            }
+        }
+
         public ObservableCollection<CashHeader> CashHeaders
         {
             set
@@ -185,7 +225,7 @@
                 return _calendar;
             }
         }
-
+    
 
         public decimal TotalLineas
         {
@@ -204,35 +244,6 @@
         }
 
 
-        //public string Filter
-        //{
-        //    set
-        //    {
-        //        if (_filter != value)
-        //        {
-        //            _filter = value;
-        //            if (string.IsNullOrEmpty(_filter))
-        //            {
-        //                ReloadCashHeaders();
-        //            }
-        //            else
-        //            {
-        //                Search();
-        //            }
-
-        //            PropertyChanged?.Invoke(
-        //                this,
-        //                new PropertyChangedEventArgs(nameof(Filter)));
-        //        }
-        //    }
-        //    get
-        //    {
-        //        return _filter;
-        //    }
-
-        //}
-
-
         #endregion
 
         #region Singleton
@@ -240,9 +251,13 @@
 
         public static SearchCashHeaderViewModel GetInstance()
         {
+            if (instance == null)
+            {
+                return new SearchCashHeaderViewModel();
+            }
+
             return instance;
         }
-
         #endregion
 
         #region Constructor
@@ -254,7 +269,6 @@
             dialogService = new DialogService();
             navigationService = new NavigationService();
             CashHeaders = new ObservableCollection<CashHeader>();
-            IsEnabled = false;
             FechaInicial = DateTime.Now;
             FechaFinal = DateTime.Now;
 
@@ -264,16 +278,6 @@
         #endregion
 
         #region Methods
-
-        //void ReloadCashHeaders()
-        //{
-        //    CashHeaders = new ObservableCollection<Grouping<string, CashHeader>>(
-        //        cashHeader
-        //        .OrderBy(s => s.Names)
-        //        .GroupBy(s => s.Names[0].ToString(), s => s)
-        //        .Select(g => new Grouping<string, CashHeader>(g.Key, g)));
-        //}
-
 
       public async void CargarPagos()
         {
@@ -335,7 +339,7 @@
                 {
                     await dialogService.ShowMessage(
                         "Error",
-                        "Debes descargar los calendarios.");
+                        "Debes descargar periodos.");
                     return;
                 }
 
@@ -351,83 +355,103 @@
             }
         }
 
-
         public ICommand SearchCommand
         {
             get { return new RelayCommand(Search); }
         }
 
-       async void Search()
-        {
+       public async void Search(){
             try
             {
-                CashHeaders = null;
-
-                if (Calendar == null && FiltroFechas == false)
+                if (Customer == null)
                 {
                     await dialogService.ShowMessage("Validacion",
-                          "Debes seleccionar un filtro antes de ejecutar la busqueda.");
+                        "Debes seleccionar un cliente antes de ejecutar la busqueda.");
                     return;
                 }
 
-                if (Calendar != null && FiltroFechas == false)
+                CashHeaders.Clear();
+                TotalLineas = 0;
+
+                if (FiltroFechas || FiltroPeriodo) { HayFiltro = true; }
+
+                if (HayFiltro)
                 {
 
-                    if (Customer == null)
+                    if (FiltroFechas && FiltroPeriodo)
                     {
                         await dialogService.ShowMessage("Validacion",
-                            "Debes seleccionar un cliente antes de ejecutar la busqueda.");
+                            "No es posible filtrar por rango de fechas y periodo a la vez.");
                         return;
                     }
 
 
-                    var pagos = dataService
+                    //Si se filtro x rango de fechas...
+
+                    if (FiltroFechas == true && FiltroPeriodo == false)
+                    {
+                        var pagosxfecha = dataService
+                            .Get<CashHeader>(true)
+                            .Where(s => s.CustId == Customer.CustId && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(FechaInicial.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(FechaFinal.ToString("yyyy/MM/dd")))
+                            .ToList();
+
+                        if (pagosxfecha == null || pagosxfecha.Count == 0)
+
+                        {
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra pagos en el rango de fechas seleccionado.");
+                            return;
+                        }
+
+                        CashHeaders = new ObservableCollection<CashHeader>(pagosxfecha);
+                        TotalLineas = CashHeaders.Sum(god => god.TranAmt);
+                    }
+
+
+                    //Si se filtro x periodo...
+
+                    if (FiltroPeriodo == true && FiltroFechas == false)
+                    {
+
+                        if (Calendar == null)
+                        {
+                            await dialogService.ShowMessage("Informacion", "Debes seleccionar un periodo.");
+                            return;
+                        }
+
+
+                        var pagosxperiodo = dataService
                         .Get<CashHeader>(true)
                         .Where(s => s.CustId == Customer.CustId && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(Calendar.StartDate.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(Calendar.EndDate.ToString("yyyy/MM/dd")))
                         .ToList();
 
 
-                    if (pagos == null || pagos.Count == 0)
+                        if (pagosxperiodo == null || pagosxperiodo.Count == 0)
 
-                    {
-                        await dialogService.ShowMessage("Informacion", "El cliente, no registra pagos en el periodo seleccionado.");
-                        return;
+                        {
+                            await dialogService.ShowMessage("Informacion", "El cliente, no registra pagos en el periodo seleccionado.");
+                            return;
+                        }
+
+                        CashHeaders = new ObservableCollection<CashHeader>(pagosxperiodo);
+
+                        TotalLineas = CashHeaders.Sum(god => god.TranAmt);
                     }
-
-                    CashHeaders = new ObservableCollection<CashHeader>(pagos);
-
-                    TotalLineas = CashHeaders.Sum(god => god.TranAmt);
                 }
 
-                if (Calendar == null && FiltroFechas == true)
+                var pagos = dataService
+                       .Get<CashHeader>(true)
+                       .Where(s => s.CustId == Customer.CustId)
+                       .ToList();
+
+                if (pagos == null || pagos.Count == 0)
+
                 {
-
-                    if (Customer == null)
-                    {
-                        await dialogService.ShowMessage("Validacion",
-                            "Debes seleccionar un cliente antes de ejecutar la busqueda.");
-                        return;
-                    }
-
-
-                    var pagos = dataService
-                        .Get<CashHeader>(true)
-                        .Where(s => s.CustId == Customer.CustId && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) >= Convert.ToDateTime(FechaInicial.ToString("yyyy/MM/dd")) && Convert.ToDateTime(s.TranDate.ToString("yyyy/MM/dd")) <= Convert.ToDateTime(FechaFinal.ToString("yyyy/MM/dd")))
-                        .ToList();
-
-
-                    if (pagos == null || pagos.Count == 0)
-
-                    {
-                        await dialogService.ShowMessage("Informacion", "El cliente, no registra pagos en el rango de fechas seleccionado.");
-                        return;
-                    }
-
-                    CashHeaders = new ObservableCollection<CashHeader>(pagos);
-
-                    TotalLineas = CashHeaders.Sum(god => god.TranAmt);
+                    await dialogService.ShowMessage("Informacion", "El cliente, no registra pagos.");
+                    return;
                 }
 
+                CashHeaders = new ObservableCollection<CashHeader>(pagos);
+                TotalLineas = CashHeaders.Sum(god => god.TranAmt);
 
             }
 
@@ -437,7 +461,6 @@
             }
         }
 
-        
         #endregion
     }
 }

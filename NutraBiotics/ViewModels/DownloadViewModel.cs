@@ -11,6 +11,7 @@
     using Xamarin.Forms;
     using Data;
     using System.Linq;
+    using System;
 
     public class DownloadViewModel : INotifyPropertyChanged
     {
@@ -232,18 +233,17 @@
 
                     salesrepresents = await DownloadMaster<SalesRep>(url, "/api/SalesReps/"+main.User.VendorId);
 
+                    if (salesrepresents == null)
+                    {
+                        DeleteAll<SalesRep>();
+                    }
+
                     var query = salesrepresents.GroupBy(x => x.VendorId)
                                     .Select(g => g.First());
 
                     foreach (var item in query)
                     {
-
-                        List<Customer> customerstemp;
-                        Message = "Descargando clientes...";
-                        customerstemp = await DownloadMaster<Customer>(url, "/api/Customers/" + item.VendorId);
-                        customers = customerstemp.Where(c => c.CustId != "22" && c.CustId != "23" && c.CustId != "24" && c.CustId != "25").ToList();
-
-                        if (customers != null && customers.Count > 0)
+                        
                         {
                             DeleteAndInsert(customers);
                             await Task.Delay(100);
@@ -254,6 +254,13 @@
                         List<ShipTo> Shiptostemp;
                         Message = "Descargando sucursales...";
                         Shiptostemp = await DownloadMaster<ShipTo>(url, "/api/ShipToes/" + item.VendorId);
+
+                        if (Shiptostemp == null)
+                        {
+                            DeleteAll<ShipTo>();
+                        }
+
+
                         var shiptoesjoin = from s in Shiptostemp
                                            join c in customers on s.CustNum equals c.CustNum
                                            where c.CustomerId == s.CustomerId && c.CustId != "22" && c.CustId != "23" && c.CustId != "24" && c.CustId != "25"
@@ -265,7 +272,6 @@
                         {
                             DeleteAndInsert(shipTos);
                             await Task.Delay(100);
-
                         }
 
 
@@ -275,6 +281,12 @@
                     Message = "Descargando territorios...";
                     territories = await DownloadMaster<Territory>(url, "/api/Territories/");
 
+                    if (territories == null)
+                    {
+                        DeleteAll<Territory>();
+                    }
+
+
                     if (territories != null && territories.Count > 0)
                     {
                         DeleteAndInsert(territories);
@@ -283,6 +295,12 @@
 
                     Message = "Descargando paises...";
                     countries = await DownloadMaster<Country>(url, "/api/Countries/");
+
+                    if (countries == null)
+                    {
+                        DeleteAll<Country>();
+                    }
+
 
                     if (countries != null && countries.Count > 0)
                     {
@@ -294,6 +312,13 @@
                     Message = "Descargando Partes...";
                     parts = await DownloadMaster<Part>(url, "/api/Parts");
 
+
+                    if (parts == null)
+                    {
+                        DeleteAll<Part>();
+                    }
+
+
                     if (parts != null && parts.Count > 0)
                     {
                         DeleteAndInsert(parts);
@@ -303,6 +328,12 @@
 
                     Message = "Descargando lista de precios...";
                     pricelist = await DownloadMaster<PriceList>(url, "/api/PriceLists");
+
+                    if (pricelist == null)
+                    {
+                        DeleteAll<PriceList>();
+                    }
+
 
                     if (pricelist != null && pricelist.Count > 0)
                     {
@@ -314,6 +345,12 @@
                     Message = "Descargando lista de precios x parte...";
                     pricelistpart = await DownloadMaster<PriceListPart>(url, "/api/PriceListParts");
 
+                    if (pricelistpart == null)
+                    {
+                        DeleteAll<PriceListPart>();
+                    }
+
+
                     if (pricelistpart != null && pricelistpart.Count > 0)
                     {
                         DeleteAndInsert(pricelistpart);
@@ -324,6 +361,14 @@
                     List<CustomerPriceList> customerpricelistTemp;
                     Message = "Descargando lista de precios x cliente...";
                     customerpricelistTemp = await DownloadMaster<CustomerPriceList>(url, "/api/CustomerPriceLists");
+
+
+                    if (customerpricelistTemp == null)
+                    {
+                        DeleteAll<CustomerPriceList>();
+                    }
+
+
 
                     var customerpricelistjoin = from cp in customerpricelistTemp
                                                 join c in customers on cp.CustomerId equals c.CustomerId
@@ -345,6 +390,12 @@
                     Message = "Descargando facturas...";
                     invoiceheaders = await DownloadMaster<InvoiceHeader>(url, "/api/InvoiceHeaders/" + main.User.VendorId);
 
+                    if (invoiceheaders == null)
+                    {
+                        DeleteAll<InvoiceHeader>();
+                    }
+
+
                     if (invoiceheaders != null && invoiceheaders.Count > 0)
                     {
                         DeleteAndInsert(invoiceheaders);
@@ -353,8 +404,14 @@
 
 
 
-                    Message = "Descargando calendarios...";
+                    Message = "Descargando periodos...";
                     calendars = await DownloadMaster<Calendar>(url, "/api/Calendars/");
+
+
+                    if (calendars == null)
+                    {
+                        DeleteAll<Calendar>();
+                    }
 
                     if (calendars != null && calendars.Count > 0)
                     {
@@ -365,6 +422,12 @@
 
                     invoicedetails = await DownloadMaster<InvoiceDetail>(url, "/api/InvoiceDetails/" + main.User.VendorId);
 
+
+                    if (invoicedetails == null)
+                    {
+                        DeleteAll<InvoiceDetail>();
+                    }
+
                     if (invoicedetails != null && invoicedetails.Count > 0)
                     {
                         DeleteAndInsert(invoicedetails);
@@ -374,6 +437,11 @@
 
                     Message = "Descargando pagos...";
                     cashheaders = await DownloadMaster<CashHeader>(url, "/api/CashHeaders/" + main.User.VendorId);
+
+                    if (cashheaders == null)
+                    {
+                        DeleteAll<CashHeader>();
+                    }
 
                     if (cashheaders != null && cashheaders.Count > 0)
                     {
@@ -416,7 +484,29 @@
             }
         }
 
-        async Task<List<T>> DownloadMaster<T>(string url, string controller) where T : class
+        public bool DeleteAll<T>() where T : class
+        {
+            try
+            {
+                using (var da = new DataAccess())
+                {
+                    var oldRecords = da.GetList<T>(false);
+                    foreach (var oldRecord in oldRecords)
+                    {
+                        da.Delete(oldRecord);
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                return false;
+            }
+        }
+
+            async Task<List<T>> DownloadMaster<T>(string url, string controller) where T : class
         {
             var response = await apiService.GetList<T>(url, controller);
             if (!response.IsSuccess)

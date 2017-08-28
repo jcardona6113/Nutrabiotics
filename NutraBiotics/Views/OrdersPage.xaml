@@ -32,14 +32,11 @@
 					Orientation="Horizontal"
 					Padding="10, 15,0,0">
 
-                <Label
+                <Image
                         VerticalOptions="Center"
-                        TextColor="White"
-						Text="Fecha:"
-						FontAttributes="Bold"
-						FontSize="Medium"
+                        Source="ic_date_range.png"
 						HorizontalOptions="Start">
-                </Label>
+                </Image>
 
                 <DatePicker
                         VerticalOptions="Center"

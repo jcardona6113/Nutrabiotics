@@ -160,7 +160,7 @@
 					Command="{Binding NewShipToCommand}"
 					TextColor="White"
 					FontAttributes="Bold"
-					Text="Añadir sucursal"
+					Text="Añadir sucursal +"
 					BackgroundColor="{StaticResource AccentColor2}">
             </Button>
 

@@ -57,22 +57,22 @@
             {
                 string color = string.Empty;
 
-                if (DiasVencimiento < -30)
+                if (DiasVencimiento < - 30)
                 {
                     color = "Rojo";
                 }
 
-                if (DiasVencimiento >= -30 && DiasVencimiento <= 1)
+                if (DiasVencimiento >= -30 && DiasVencimiento <= -1)
                 {
                     color = "Naranja";
                 }
 
-                if (DiasVencimiento  <= 7)
+                if (DiasVencimiento > 0 && DiasVencimiento  <= 7)
                 {
                     color = "Amarillo";
                 }
 
-                if (DiasVencimiento > 7)
+                if (DiasVencimiento >= 7)
                 {
                     color = "Verde";
                 }
@@ -80,6 +80,18 @@
                 return color;
             }
         }
+
+
+        public int DiasVencidos
+        {
+            get
+            {
+                int valor = 0;
+                if (DiasVencimiento < 0) { valor = Math.Abs(DiasVencimiento); };
+                return valor;
+            }
+        }
+
 
 
         #endregion
