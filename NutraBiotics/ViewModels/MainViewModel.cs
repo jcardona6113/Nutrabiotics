@@ -384,8 +384,37 @@
                     NeedByDate = NewOrder.NeedBy,
                     RowMod = NewOrder.RowMod,
                 };
-
+                //Actualizo encabezado
                 dataService.InsertOrUpdate(orderHeader);
+
+
+                //Borro el detalle anterior
+                var detailtodelete = dataService
+                    .Get<OrderDetail>(false)
+                    .Where(d => d.SalesOrderHeaderId == orderHeader.SalesOrderHeaderId)
+                    .ToList();
+
+                int e = 0;
+                foreach (var detail in detailtodelete)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderLine = ++e,
+                        SalesOrderDetaliId = detail.SalesOrderDetaliId,
+                        SalesOrderHeaderId = orderHeader.SalesOrderHeaderId,
+                        PriceListPartId = detail.PriceListPartId,
+                        PartId = detail.PartId,
+                        OrderQty = detail.OrderQty,
+                        Reference = detail.Reference,
+                        PartNum = detail.PartNum,
+                        UnitPrice = detail.UnitPrice,
+                    };
+
+                    dataService.Delete(orderDetail);
+
+                }
+
+                //Inserto el detalle nuevo
                 int i = 0;
                 foreach (var detail in NewOrder.GridOrderDetails)
                 {
@@ -401,9 +430,8 @@
                         PartNum = detail.PartNum,
                         UnitPrice = detail.BasePrice,
                     };
-                    dataService.InsertOrUpdate(orderDetail);
+                    dataService.Insert(orderDetail);
                 }
-
                 ClearOrderFields();
             }
             catch (Exception ex)
@@ -412,11 +440,10 @@
             }
         }
 
+
         async void GoDeleteOrder()
         {
-
             var orders = dataService.Get<OrderHeader>(true).ToList();
-
             try
             {
                 var orderHeader = new OrderHeader
@@ -624,6 +651,7 @@
 
             else if (NewOrder.RowMod == "U")
             {
+
                 GoUpdateOrder();
                 ClearOrderFields();
 

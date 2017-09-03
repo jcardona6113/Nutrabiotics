@@ -444,6 +444,7 @@
         public void EditOrderReceipt(OrderHeader OrderToEdit)
         {
 
+        
             //Encabezado
             SalesOrderHeaderId = OrderToEdit.SalesOrderHeaderId;
             SalesOrderHeaderInterId = OrderToEdit.SalesOrderHeaderInterId;
@@ -481,6 +482,38 @@
                     Reference = item.Reference,
                 });
             }
+
+
+            //try
+            //{
+            //    var DetailTemp = OrderToEdit.OrderDetails;
+            //    dataService.Delete(DetailTemp);
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+
+
+            //Detalle Temporal
+         
+           
+            //int i = 0;
+            //foreach (var detail in OrderToEdit.OrderDetails)
+            //{
+            //    var orderDetail = new OrderDetail
+            //    {
+            //        OrderLine = ++i,
+            //        SalesOrderDetaliId = detail.SalesOrderDetaliId,
+            //        SalesOrderHeaderId = OrderToEdit.SalesOrderHeaderId,
+            //        PriceListPartId = detail.PriceListPartId,
+            //        PartId = detail.PartId,
+            //        OrderQty = detail.OrderQty,
+            //        Reference = detail.Reference,
+            //        PartNum = detail.PartNum,
+            //        UnitPrice = detail.UnitPrice,
+            //    };
+
 
             //Cargo lista de precios
             LoadPriceLists();

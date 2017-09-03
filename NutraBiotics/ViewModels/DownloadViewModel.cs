@@ -243,12 +243,18 @@
 
                     foreach (var item in query)
                     {
-                        
+
+                        List<Customer> customerstemp;
+                        Message = "Descargando clientes...";
+                        customerstemp = await DownloadMaster<Customer>(url, "/api/Customers/" + item.VendorId);
+                        customers = customerstemp.Where(c => c.CustId != "22" && c.CustId != "23" && c.CustId != "24" && c.CustId != "25").ToList();
+
+                        if (customers != null && customers.Count > 0)
+ 
                         {
                             DeleteAndInsert(customers);
                             await Task.Delay(100);
                         }
-
 
 
                         List<ShipTo> Shiptostemp;

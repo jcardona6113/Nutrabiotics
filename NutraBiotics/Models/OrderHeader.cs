@@ -141,6 +141,14 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.NewOrder = new NewOrderViewModel();
             mainViewModel.NewOrder.RowMod = "U";
+
+
+
+
+
+
+
+
             mainViewModel.NewOrder.EditOrderReceipt(this);
             await navigationService.Navigate("NewOrderTab");
         }

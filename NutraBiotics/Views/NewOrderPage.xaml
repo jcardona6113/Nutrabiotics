@@ -14,7 +14,8 @@
                 BindingContext="{Binding NewOrder}"
                 Padding="5">
                 <Grid>
-                    <Grid.RowDefinitions>
+                    <!--<Grid.RowDefinitions>
+                        --><!--<RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -23,9 +24,8 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                        <RowDefinition Height="*" />--><!--
+                    </Grid.RowDefinitions>-->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2.2*" />
@@ -95,7 +95,7 @@
                         HorizontalOptions="End"
                         WidthRequest="90"
                         TextColor="{StaticResource FontColor}"
-                        Text="NeedBy">
+                        Text="Fecha Solicitud">
                     </Label>
 
                     <DatePicker 
