@@ -91,6 +91,7 @@
             {
                 return DateTime.Now;
             }
+            set { }
         }
 
         public bool IsRefreshing
@@ -452,6 +453,7 @@
             SincronizadoEpicor = OrderToEdit.SincronizadoEpicor;
             IsSync = OrderToEdit.IsSync;
             NeedBy = OrderToEdit.NeedByDate;
+            Date = OrderToEdit.Date;
             Observations = OrderToEdit.Observations;
 
 
@@ -525,7 +527,6 @@
 
         public void DeleteOrderReceipt(OrderHeader OrderToDelete)
         {
-
             //Encabezado
             SalesOrderHeaderId = OrderToDelete.SalesOrderHeaderId;
             SalesOrderHeaderInterId = OrderToDelete.SalesOrderHeaderInterId;

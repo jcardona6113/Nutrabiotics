@@ -156,13 +156,13 @@
                 </StackLayout>
             </ScrollView>
 
-            <Button 
+            <!--Button 
 					Command="{Binding NewShipToCommand}"
 					TextColor="White"
 					FontAttributes="Bold"
 					Text="Añadir sucursal +"
 					BackgroundColor="{StaticResource AccentColor2}">
-            </Button>
+            </-->
 
             <StackLayout>
 

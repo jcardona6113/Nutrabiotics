@@ -155,16 +155,26 @@
 										Grid.Column="1"
                                         FontAttributes="Bold"
                                         WidthRequest="120"
-										VerticalOptions="Start"
+										VerticalTextAlignment="Start"
 										TextColor="{StaticResource FontColor}"
 										Text="{Binding TaxAmt, StringFormat='Iva: {0:C2}'}">
+                                </Label>
+
+                                <Label 
+										HorizontalTextAlignment="End"        
+										Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        WidthRequest="120"
+										VerticalTextAlignment="Center"
+										TextColor="{StaticResource FontColor}"
+										Text="{Binding Discount, StringFormat='Dcto: {0:C2}'}">
                                 </Label>
 
                                 <Label 
                                         HorizontalTextAlignment="End"        
                                         Grid.Column="1"
                                         FontAttributes="Bold"
-                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="End"
                                         TextColor="{StaticResource FontColor}"
                                         Text="{Binding Total, StringFormat='Total: {0:C2}'}">
                                 </Label>

@@ -301,9 +301,16 @@
         {
             try
             {
+                Decimal Descuento = 0;
 
-                var orderHeader = new OrderHeader
+                foreach (var dcto in NewOrder.GridOrderDetails)
                 {
+                     Descuento = Descuento+=(dcto.BasePrice * Convert.ToDecimal(dcto.Reference));
+                }
+
+                    var orderHeader = new OrderHeader
+                {
+                    Customer = NewOrder.Customer,
                     UserId = User.UserId,
                     VendorId = User.VendorId,
                     ShipToNum = NewOrder.ShipTo.ShipToNum,
@@ -318,6 +325,8 @@
                     SalesCategory = string.Empty,
                     InvoiceNum = 0,
                     Facturado = false,
+                    Discount = Descuento,
+
                     Observations = NewOrder.Observations,
                     IsSync = false,
                     Total = NewOrder.TotalLineas,
@@ -350,6 +359,7 @@
             catch (Exception ex)
             {
                 await dialogService.ShowMessage("Error", ex.Message);
+                return;
             }
         }
 
@@ -357,6 +367,17 @@
         {
             try
             {
+
+                Decimal Descuento = 0;
+
+                foreach (var dcto in NewOrder.GridOrderDetails)
+                {
+                    Descuento = Descuento += (dcto.BasePrice * Convert.ToDecimal(dcto.Reference));
+                }
+
+
+
+
                 var orderHeader = new OrderHeader
                 {
                     SalesOrderHeaderId = NewOrder.SalesOrderHeaderId,
@@ -373,6 +394,7 @@
                     CustId = NewOrder.Customer.CustId,
                     CreditHold = NewOrder.Customer.CreditHold,
                     Date = NewOrder.Date,
+                    Discount = Descuento,
                     Platform = "Movil",
                     TermsCode = NewOrder.Customer.TermsCode,
                     ShipToId = NewOrder.ShipTo.ShipToId,
@@ -439,7 +461,6 @@
                 await dialogService.ShowMessage("Error", ex.Message);
             }
         }
-
 
         async void GoDeleteOrder()
         {

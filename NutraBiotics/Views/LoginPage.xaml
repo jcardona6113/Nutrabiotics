@@ -13,7 +13,7 @@
             Android="10">
         </OnPlatform>
     </ContentPage.Padding>
-	<ContentPage.Content>
+    <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Login}">
             <StackLayout
@@ -92,5 +92,5 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

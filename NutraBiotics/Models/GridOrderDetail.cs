@@ -74,7 +74,7 @@
                 var newOrderViewModel = NewOrderViewModel.GetInstance();
                 newOrderViewModel.GridOrderDetails.Remove(this);
                 newOrderViewModel.TotalLineas = newOrderViewModel
-                    .GridOrderDetails.Sum(god => god.Value);
+                .GridOrderDetails.Sum(god => god.Value);
 			}
 		}
 

@@ -83,10 +83,21 @@
 									FontSize="Large"
 									FontAttributes="Bold"
 									TextColor="#F75D70"
+									Text="{Binding MontoMenosSaldo, StringFormat='Total Pagos: {0:C2}'}" 
+									HorizontalTextAlignment="Center" 
+									VerticalTextAlignment="Center">
+                            </Label>
+
+                            <Label 
+									FontSize="Large"
+									FontAttributes="Bold"
+									TextColor="#F75D70"
 									Text="{Binding TotalSaldo, StringFormat='Total Saldo: {0:C2}'}" 
 									HorizontalTextAlignment="Center" 
 									VerticalTextAlignment="Center">
                             </Label>
+
+
                         </StackLayout>
                     </ContentView>
                 </ListView.Footer>

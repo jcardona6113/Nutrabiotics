@@ -32,7 +32,7 @@
 
         public int UserId { get; set; }
 
-                public string VendorId { get; set; }
+        public string VendorId { get; set; }
 
         [ForeignKey(typeof(Customer))]
         public int CustomerId { get; set; }
@@ -78,6 +78,24 @@
         public bool Facturado { get; set; }
 
         public decimal Total { get; set; }
+
+
+        public decimal Discount
+        {
+            get
+            {
+                if (OrderDetails == null)
+                {
+                    return 0;
+                }
+
+                return OrderDetails.Sum(od => Convert.ToDecimal(od.Reference) * od.UnitPrice);
+            }
+            set
+            {
+
+            }
+        }
 
 
         public decimal TotalLineas

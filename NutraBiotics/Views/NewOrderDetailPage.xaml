@@ -27,7 +27,7 @@
 									FontSize="Large"
 									FontAttributes="Bold"
 									TextColor="White"
-									Text="{Binding Total, StringFormat='Total: {0:C2}'}" 
+									Text="{Binding TotalLineas, StringFormat='Total: {0:C2}'}" 
 									HorizontalTextAlignment="End" 
 									VerticalTextAlignment="Center" />
                         </ContentView>

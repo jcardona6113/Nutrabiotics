@@ -26,6 +26,7 @@ namespace NutraBiotics.ViewModels
         bool _facturaconsaldo;
         decimal _totallineas;
         decimal _totalSaldo;
+        decimal _montomenossaldo;
         bool _filtrofechas;
         bool isEnabled;
         DateTime _fechaInicial;
@@ -200,6 +201,23 @@ namespace NutraBiotics.ViewModels
             get
             {
                 return _totalSaldo;
+            }
+        }
+
+
+        public decimal MontoMenosSaldo
+        {
+            set
+            {
+                if (_montomenossaldo != value)
+                {
+                    _montomenossaldo = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MontoMenosSaldo)));
+                }
+            }
+            get
+            {
+                return _montomenossaldo;
             }
         }
 
@@ -434,6 +452,7 @@ namespace NutraBiotics.ViewModels
                         InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasconsaldo);
                         TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                         TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                        MontoMenosSaldo = (TotalLineas - TotalSaldo);
                     }
 
                     //filtro x fechas
@@ -455,6 +474,7 @@ namespace NutraBiotics.ViewModels
                         InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoicesxfechas);
                         TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                         TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                        MontoMenosSaldo = (TotalLineas - TotalSaldo);
                     }
 
                     //filtro x fechas y fact. con saldo
@@ -475,6 +495,7 @@ namespace NutraBiotics.ViewModels
                         InvoiceHeaders = new ObservableCollection<InvoiceHeader>(invoicesxfechas);
                         TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                         TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                        MontoMenosSaldo = (TotalLineas - TotalSaldo);
                     }
 
                     //filtro x periodo
@@ -503,6 +524,7 @@ namespace NutraBiotics.ViewModels
                         InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasxperiodo);
                         TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                         TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                        MontoMenosSaldo = (TotalLineas - TotalSaldo);
                     }
 
                     //filtro x periodo y fact. con saldo
@@ -530,6 +552,7 @@ namespace NutraBiotics.ViewModels
                         InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturasxpreiodo);
                         TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                         TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                        MontoMenosSaldo = (TotalLineas - TotalSaldo);
                     }
 
                 }
@@ -553,6 +576,7 @@ namespace NutraBiotics.ViewModels
                     InvoiceHeaders = new ObservableCollection<InvoiceHeader>(facturas);
                     TotalLineas = InvoiceHeaders.Sum(god => god.InvoiceAmt);
                     TotalSaldo = InvoiceHeaders.Sum(god => god.InvoiceBal);
+                    MontoMenosSaldo = (TotalLineas - TotalSaldo);
                 }
 
                 await navigationService.Navigate("InvoicesListPage");
